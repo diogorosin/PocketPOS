@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        minSdkVersion 22
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    //PROJECT
+    implementation project(path: ':data')
+    //ROOM
+    implementation "android.arch.lifecycle:viewmodel:1.1.0"
+    implementation "android.arch.lifecycle:livedata:1.1.0"
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+    //JERSEY --- NUNCA ATUALIZAR AS VERSOES DAS BIBLIOTECAS ABAIXO
+    implementation 'org.glassfish.jersey.core:jersey-client:2.17'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.0'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.0'
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.9.0'
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.9.0'
+    implementation 'com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.9.0'
+    //ANDROID
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+configurations {
+    compile.exclude group: 'javax.inject', module: 'javax.inject'
+}

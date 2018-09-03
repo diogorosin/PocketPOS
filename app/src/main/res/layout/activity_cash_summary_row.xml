@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/activity_cash_summary_row_operation_textview"
+        android:gravity="center_vertical|start"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"/>
+
+    <TextView
+        android:id="@+id/activity_cash_summary_row_payment_textview"
+        android:gravity="center_vertical|start"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"/>
+
+    <TextView
+        android:id="@+id/activity_cash_summary_row_total_textview"
+        android:gravity="center_vertical|end"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+</LinearLayout>

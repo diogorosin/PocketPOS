@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="br.com.pocketpos.app.CashActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/activity_cash_register_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/activity_cash_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:expandedTitleTextAppearance="@style/CashActivityExpandedTitle"
+            app:collapsedTitleTextAppearance="@style/CashActivityCollapsedTitle"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@id/activity_cash_toolbar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/activity_cash_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                app:layout_collapseMode="pin"
+                app:theme="@style/CashActivityToolBarStyle"/>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/activity_cash_content" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/activity_cash_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:tint="@color/half_black"
+        app:elevation="6dp"
+        app:backgroundTint="@color/white"
+        app:layout_anchor="@id/activity_cash_register_bar_layout"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/unlock_24" />
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/activity_cash_fam"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="16dp"
+        fab:fab_addButtonColorNormal="@color/white"
+        fab:fab_addButtonColorPressed="@color/white_pressed"
+        fab:fab_addButtonPlusIconColor="@color/half_black"
+        fab:fab_addButtonSize="normal"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        fab:fab_labelsPosition="left">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/activity_cash_removal_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            fab:fab_icon="@drawable/cash_removal_24"
+            fab:fab_size="mini"
+            fab:fab_title="@string/removal"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_colorPressed="@color/white_pressed"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/activity_cash_supply_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            fab:fab_icon="@drawable/cash_supply_24"
+            fab:fab_size="mini"
+            fab:fab_title="@string/supply"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_colorPressed="@color/white_pressed"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</android.support.design.widget.CoordinatorLayout>

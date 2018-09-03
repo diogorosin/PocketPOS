@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="40dp"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/welcome_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.17"
+        android:gravity="center|left|center"
+        android:text="@string/welcome"
+        android:textSize="18sp" />
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="1"
+                android:layout_span="2"
+                android:text="@string/welcome_line_01">
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="20dp"
+            android:visibility="visible">
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text="•"
+                android:layout_marginRight="10dp">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                android:text="@string/welcome_line_02">
+            </TextView>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text="•"
+                android:layout_marginRight="10dp">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                android:text="@string/welcome_line_03">
+            </TextView>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text="•"
+                android:layout_marginRight="10dp">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                android:text="@string/welcome_line_04">
+            </TextView>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text="•"
+                android:layout_marginRight="10dp">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                android:text="@string/welcome_line_05">
+            </TextView>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text="•"
+                android:layout_marginRight="10dp">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                android:text="@string/welcome_line_06">
+            </TextView>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text="•"
+                android:layout_marginRight="10dp">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                android:text="@string/welcome_line_07">
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="20dp"
+            android:visibility="visible">
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="1"
+                android:layout_span="2"
+                android:text="@string/welcome_line_08">
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="20dp"
+            android:visibility="visible">
+        </TableRow>
+
+    </TableLayout>
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/account_user_radiogroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/activity_account_new_user_radiobutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.17"
+            android:checked="true"
+            android:duplicateParentState="false"
+            android:text="@string/welcome_option01" />
+
+        <RadioButton
+            android:id="@+id/activity_account_use_user_radiobutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.17"
+            android:text="@string/welcome_option02"/>
+
+    </RadioGroup>
+
+</LinearLayout>

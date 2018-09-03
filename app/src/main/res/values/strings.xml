@@ -1,0 +1,117 @@
+<resources>
+
+    <!-- Android         -->
+    <string name="app_name">PocketPOS</string>
+
+    <!-- Words           -->
+    <string name="start">Iniciar</string>
+    <string name="preview">Voltar</string>
+    <string name="next">Avançar</string>
+    <string name="skip">Pular</string>
+    <string name="finish">Finalizar</string>
+    <string name="delete">Excluir</string>
+    <string name="email">Email</string>
+    <string name="password">Senha</string>
+    <string name="name">Nome</string>
+    <string name="company">Empresa</string>
+    <string name="company_denomination">Razão Social</string>
+    <string name="company_fancyname">Fantasia</string>
+    <string name="confirm_password">Confirme a senha</string>
+    <string name="sign_in">Entrar</string>
+    <string name="try_again">Tentar novamente</string>
+    <string name="cash_closed">Caixa fechado</string>
+    <string name="cash_opened">Caixa aberto</string>
+    <string name="open_value">Valor inicial</string>
+    <string name="total">Total</string>
+    <string name="operation">Operação</string>
+    <string name="date_time">Data/Hora</string>
+    <string name="supply_value">Valor a ser inserido</string>
+    <string name="removal_value">Valor a ser retirado</string>
+    <string name="cash_summary">Resumo do Caixa</string>
+    <string name="cash_open">Abertura do Caixa</string>
+    <string name="cash_close">Fechamento do Caixa</string>
+    <string name="cash_supply">Complemento do Caixa</string>
+    <string name="cash_removal">Sangria do Caixa</string>
+    <string name="opening">Abertura</string>
+    <string name="closure">Fechamento</string>
+    <string name="supplies">Complemento(s)</string>
+    <string name="sales">Venda(s)</string>
+    <string name="sale">Venda</string>
+    <string name="removals">Sangria(s)</string>
+    <string name="supply">Complemento</string>
+    <string name="catalog">Venda</string>
+    <string name="removal">Sangria</string>
+    <string name="undefined">Indefinido</string>
+    <string name="money">Dinheiro</string>
+    <string name="card">Cartão</string>
+    <string name="payment">Pagamento</string>
+    <string name="entries">Lançamentos</string>
+    <string name="input">Entrada</string>
+    <string name="output">Saída</string>
+    <string name="value">Valor</string>
+    <string name="note">Observação</string>
+    <string name="user">Usuário</string>
+    <string name="type">Tipo</string>
+    <string name="item">Item</string>
+    <string name="price">Preço</string>
+    <string name="qtde">Qtde</string>
+    <string name="shopping_cart">Itens da Venda</string>
+    <string name="to_receive">A receber</string>
+    <string name="un">Un</string>
+    <string name="pay">Pagar</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="discounts">Descontos</string>
+    <string name="additions">Acréscimos</string>
+    <string name="received">Recebido</string>
+
+    <!-- Messages        -->
+    <string name="error_invalid_email">O login informado é inválido.</string>
+    <string name="error_invalid_password">A senha informada é inválida.</string>
+    <string name="error_user_not_active">O usuário não está ativo.</string>
+    <string name="error_invalid_name">O nome informado é inválido.</string>
+    <string name="error_invalid_company_denomination">Razão Social informada é inválida.</string>
+    <string name="error_invalid_company_fancyname">Nome fantasia informado é inválido.</string>
+    <string name="error_password_does_not_match">As senhas não coincidem.</string>
+    <string name="error_field_required">O preenchimento desse campo é obrigatório.</string>
+    <string name="success_cash_closed">Caixa fechado.</string>
+    <string name="success_cash_opened">Caixa aberto.</string>
+    <string name="success_cash_supplied">Caixa complementado.</string>
+    <string name="success_cash_removed">Caixa sangrado.</string>
+
+    <!-- Dialogs         -->
+    <string name="dlg_title_login_failure">Não foi possível efetuar o login:</string>
+    <string name="dlg_title_request_failure">Não foi possível concluir a requisição:</string>
+    <string name="dlg_title_configuration_failure">Não foi possível configurar o dispositivo:</string>
+    <string name="dlg_title_retrieve_device_failure">Não foi possível obter informações do dispositivo no servidor:</string>
+    <string name="dlg_title_cash_open">@string/cash_open</string>
+    <string name="dlg_title_cash_close">@string/cash_close</string>
+    <string name="dlg_title_cash_supply">@string/cash_supply</string>
+    <string name="dlg_title_cash_removal">@string/cash_removal</string>
+    <string name="button_sync_and_try_again">Sincronizar e tentar novamente</string>
+    <string name="button_change_credentials">Informar novamente login e senha</string>
+    <string name="button_ok">Ok</string>
+
+    <!-- AccountActivity -->
+    <string name="welcome">Bem-Vindo ao PocketPOS!</string>
+    <string name="welcome_line_01">Com esse aplicativo você poderá:</string>
+    <string name="welcome_line_02">Emitir cupons fiscais eletrônicos de vendas;</string>
+    <string name="welcome_line_03">Imprimir cupons fiscais e de controle;</string>
+    <string name="welcome_line_04">Realizar abertura, fechamento, reposição e sangria do caixa;</string>
+    <string name="welcome_line_05">Extrair relatórios gerenciais;</string>
+    <string name="welcome_line_06">Gerenciar produtos e preços de forma integrada com os demais dispositivos;</string>
+    <string name="welcome_line_07">Efetuar recebimento com cartão de crédito/débito e muito mais... "</string>
+    <string name="welcome_line_08">Selecione uma opção abaixo e pressione iniciar:</string>
+    <string name="welcome_option01">Criar uma nova conta.</string>
+    <string name="welcome_option02">Efetuar login com uma conta existente.</string>
+    <string name="welcome_option03">Criar uma nova empresa.</string>
+    <string name="welcome_option04">Utilizar uma empresa existente.</string>
+    <string name="welcome_register">Informe seus dados para a criação da nova conta:</string>
+    <string name="welcome_login">Informe suas credenciais para efetuar o acesso:</string>
+    <string name="welcome_company">Selecione uma opção abaixo e pressione avançar:</string>
+    <string name="finish_line_01">Parabéns! Dispositivo configurado com sucesso.</string>
+    <string name="company_register">Informe os dados da sua empresa:</string>
+    <string name="check">Cheque</string>
+    <string name="credit_card">Cartão de Crédito</string>
+    <string name="debit_card">Cartão de Débito</string>
+
+</resources>

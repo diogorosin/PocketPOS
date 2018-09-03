@@ -1,0 +1,24 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="CashActivityExpandedTitle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">36sp</item>
+    </style>
+    <style name="CashActivityCollapsedTitle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">21sp</item>
+    </style>
+    <style name="CashActivityToolBarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:colorControlNormal">#ffffff</item>
+    </style>
+
+    <!--APAGAR-->
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_background</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>
