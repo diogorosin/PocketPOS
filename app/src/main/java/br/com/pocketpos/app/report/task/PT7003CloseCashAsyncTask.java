@@ -85,7 +85,7 @@ public class PT7003CloseCashAsyncTask<
 
             summaryRow.setDateTime(cashModel.getDateTime());
 
-            summaryRow.setPayment(cashModel.getPayment());
+            summaryRow.setPayment(cashModel.getMethod());
 
             summaryRow.setType(cashModel.getType());
 

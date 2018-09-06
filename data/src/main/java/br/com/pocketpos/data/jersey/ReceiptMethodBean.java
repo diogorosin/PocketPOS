@@ -1,6 +1,6 @@
 package br.com.pocketpos.data.jersey;
 
-public class PaymentBean {
+public class ReceiptMethodBean {
 
 	private String identifier;
 

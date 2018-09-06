@@ -3,14 +3,16 @@ package br.com.pocketpos.data.util;
 import br.com.pocketpos.data.jersey.CatalogBean;
 import br.com.pocketpos.data.jersey.DatasetBean;
 import br.com.pocketpos.data.jersey.MeasureUnitBean;
-import br.com.pocketpos.data.jersey.PaymentBean;
+import br.com.pocketpos.data.jersey.PaymentMethodBean;
+import br.com.pocketpos.data.jersey.ReceiptMethodBean;
 import br.com.pocketpos.data.jersey.ProductBean;
 import br.com.pocketpos.data.jersey.UserBean;
 import br.com.pocketpos.data.room.CatalogItemVO;
 import br.com.pocketpos.data.room.CatalogVO;
 import br.com.pocketpos.data.room.MeasureUnitMeasureUnitVO;
 import br.com.pocketpos.data.room.MeasureUnitVO;
-import br.com.pocketpos.data.room.PaymentVO;
+import br.com.pocketpos.data.room.PaymentMethodVO;
+import br.com.pocketpos.data.room.ReceiptMethodVO;
 import br.com.pocketpos.data.room.ProductProductVO;
 import br.com.pocketpos.data.room.ProductVO;
 import br.com.pocketpos.data.room.UserVO;
@@ -267,24 +269,47 @@ public class DBSync {
 
             }
 
-            if (datasetBean.getPayments() != null &&
-                    !datasetBean.getPayments().isEmpty()) {
+            if (datasetBean.getReceiptMethods() != null &&
+                    !datasetBean.getReceiptMethods().isEmpty()) {
 
-                for (PaymentBean paymentBean : datasetBean.getPayments()) {
+                for (ReceiptMethodBean receiptMethodBean : datasetBean.getReceiptMethods()) {
 
-                    PaymentVO paymentVO = new PaymentVO();
+                    ReceiptMethodVO receiptMethodVO = new ReceiptMethodVO();
 
-                    paymentVO.setIdentifier(paymentBean.getIdentifier());
+                    receiptMethodVO.setIdentifier(receiptMethodBean.getIdentifier());
 
-                    paymentVO.setDenomination(paymentBean.getDenomination());
+                    receiptMethodVO.setDenomination(receiptMethodBean.getDenomination());
 
-                    if (database.paymentDAO().exists(paymentVO.getIdentifier()))
+                    if (database.receiptMethodDAO().exists(receiptMethodVO.getIdentifier()))
 
-                        database.paymentDAO().update(paymentVO);
+                        database.receiptMethodDAO().update(receiptMethodVO);
 
                     else
 
-                        database.paymentDAO().create(paymentVO);
+                        database.receiptMethodDAO().create(receiptMethodVO);
+
+                }
+
+            }
+
+            if (datasetBean.getPaymentMethods() != null &&
+                    !datasetBean.getPaymentMethods().isEmpty()) {
+
+                for (PaymentMethodBean paymentMethodBean : datasetBean.getPaymentMethods()) {
+
+                    PaymentMethodVO paymentMethodVO = new PaymentMethodVO();
+
+                    paymentMethodVO.setIdentifier(paymentMethodBean.getIdentifier());
+
+                    paymentMethodVO.setDenomination(paymentMethodBean.getDenomination());
+
+                    if (database.paymentMethodDAO().exists(paymentMethodVO.getIdentifier()))
+
+                        database.paymentMethodDAO().update(paymentMethodVO);
+
+                    else
+
+                        database.paymentMethodDAO().create(paymentMethodVO);
 
                 }
 

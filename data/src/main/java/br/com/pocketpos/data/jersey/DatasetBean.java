@@ -20,7 +20,10 @@ public class DatasetBean {
 
     private List<CatalogBean> catalogs;
 
-    private List<PaymentBean> payments;
+    private List<ReceiptMethodBean> receiptMethods;
+
+    private List<PaymentMethodBean> paymentMethods;
+
 
     public CompanyBean getCompany() {
 
@@ -118,15 +121,27 @@ public class DatasetBean {
 
     }
 
-    public List<PaymentBean> getPayments() {
+    public List<ReceiptMethodBean> getReceiptMethods() {
 
-        return payments;
+        return receiptMethods;
 
     }
 
-    public void setPayments(List<PaymentBean> payments) {
+    public void setReceiptMethods(List<ReceiptMethodBean> receiptMethods) {
 
-        this.payments = payments;
+        this.receiptMethods = receiptMethods;
+
+    }
+
+    public List<PaymentMethodBean> getPaymentMethods() {
+
+        return paymentMethods;
+
+    }
+
+    public void setPaymentMethods(List<PaymentMethodBean> paymentMethods) {
+
+        this.paymentMethods = paymentMethods;
 
     }
 

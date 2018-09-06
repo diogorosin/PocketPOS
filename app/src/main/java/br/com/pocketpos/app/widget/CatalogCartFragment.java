@@ -132,7 +132,7 @@ public class CatalogCartFragment
 
             case 1:
 
-                title.setText(R.string.payment);
+                title.setText(R.string.pay);
 
                 break;
 

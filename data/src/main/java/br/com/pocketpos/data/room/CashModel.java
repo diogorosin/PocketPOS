@@ -12,7 +12,7 @@ public class CashModel {
 
     private Integer identifier;
 
-    private String payment;
+    private String method;
 
     private String operation;
 
@@ -44,15 +44,15 @@ public class CashModel {
 
     }
 
-    public String getPayment() {
+    public String getMethod() {
 
-        return payment;
+        return method;
 
     }
 
-    public void setPayment(String payment) {
+    public void setMethod(String method) {
 
-        this.payment = payment;
+        this.method = method;
 
     }
 

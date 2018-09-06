@@ -59,7 +59,7 @@ public final class CloseCashAsyncTask<A extends Activity & CloseCashAsyncTask.Li
 
             moneyCashVO.setDateTime(date);
 
-            moneyCashVO.setPayment("DIN");
+            moneyCashVO.setMethod("DIN");
 
             moneyCashVO.setOrigin(null);
 
@@ -80,7 +80,7 @@ public final class CloseCashAsyncTask<A extends Activity & CloseCashAsyncTask.Li
 
             cardCashVO.setDateTime(date);
 
-            cardCashVO.setPayment("CCR");
+            cardCashVO.setMethod("CCR");
 
             cardCashVO.setOrigin(null);
 
@@ -110,7 +110,7 @@ public final class CloseCashAsyncTask<A extends Activity & CloseCashAsyncTask.Li
 
             moneyCashModel.setOrigin(moneyCashVO.getOrigin());
 
-            moneyCashModel.setPayment(moneyCashVO.getPayment());
+            moneyCashModel.setMethod(moneyCashVO.getMethod());
 
             moneyCashModel.setTotal(moneyCashVO.getTotal());
 
@@ -131,7 +131,7 @@ public final class CloseCashAsyncTask<A extends Activity & CloseCashAsyncTask.Li
 
             cardCashModel.setOrigin(cardCashVO.getOrigin());
 
-            cardCashModel.setPayment(cardCashVO.getPayment());
+            cardCashModel.setMethod(cardCashVO.getMethod());
 
             cardCashModel.setTotal(cardCashVO.getTotal());
 

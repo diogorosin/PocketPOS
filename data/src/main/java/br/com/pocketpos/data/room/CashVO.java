@@ -10,27 +10,21 @@ import android.support.annotation.NonNull;
 import java.util.Date;
 
 /*
-
     IDENTIFIER: IDENTIFICADOR DO LANCAMENTO
-    PAYMENT...: FORMA DE PAGAMENTO
+    METHOD....: METODO/FORMA DE PAGAMENTO/RECEBIMENTO
     OPERATION.: CODIGO DA OPERACAO (ABE=ABERTURA, FEC=FECHAMENTO, SAN=SANGRIA, SUP=SUPRIMENTO, VEN=VENDA)
+    ORIGIN....: ORIGEM (NUMERO DA VENDA)
     TYPE......: TIPO DA OPERACAO (E=ENTRADA, S=SAIDA)
     NOTE......: OBSERVACOES
     DATETIME..: DATA E HORA
     USER......: IDENTIFICADOR DO USUARIO
     TOTAL.....: TOTAL DO LANCAMENTO
-
 */
 @Entity(tableName = "Cash",
         foreignKeys = {
                 @ForeignKey(entity = UserVO.class,
                         parentColumns = "identifier",
                         childColumns = "user",
-                        onDelete = ForeignKey.RESTRICT,
-                        onUpdate = ForeignKey.CASCADE),
-                @ForeignKey(entity = PaymentVO.class,
-                        parentColumns = "identifier",
-                        childColumns = "payment",
                         onDelete = ForeignKey.RESTRICT,
                         onUpdate = ForeignKey.CASCADE)})
 public class CashVO {
@@ -40,7 +34,7 @@ public class CashVO {
     private Integer identifier;
 
     @ColumnInfo
-    private String payment;
+    private String method;
 
     @ColumnInfo
     private String operation;
@@ -77,15 +71,15 @@ public class CashVO {
 
     }
 
-    public String getPayment() {
+    public String getMethod() {
 
-        return payment;
+        return method;
 
     }
 
-    public void setPayment(String payment) {
+    public void setMethod(String method) {
 
-        this.payment = payment;
+        this.method = method;
 
     }
 

@@ -7,14 +7,14 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import br.com.pocketpos.data.room.PaymentDAO;
-import br.com.pocketpos.data.room.PaymentModel;
+import br.com.pocketpos.data.room.ReceiptMethodDAO;
+import br.com.pocketpos.data.room.ReceiptMethodModel;
 import br.com.pocketpos.data.util.DB;
 
 public class PaymentViewModel extends AndroidViewModel {
 
 
-    private LiveData<List<PaymentModel>> payments;
+    private LiveData<List<ReceiptMethodModel>> payments;
 
 
     public PaymentViewModel(@NonNull Application application) {
@@ -24,15 +24,15 @@ public class PaymentViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<List<PaymentModel>> getPayments() {
+    public LiveData<List<ReceiptMethodModel>> getPayments() {
 
         if (payments ==null) {
 
-            PaymentDAO paymentDAO = DB.getInstance(
+            ReceiptMethodDAO receiptMethodDAO = DB.getInstance(
                     getApplication()).
-                    paymentDAO();
+                    receiptMethodDAO();
 
-            payments = paymentDAO.list();
+            payments = receiptMethodDAO.list();
 
         }
 

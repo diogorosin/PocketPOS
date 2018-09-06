@@ -16,7 +16,7 @@ import java.util.List;
 
 import br.com.pocketpos.R;
 import br.com.pocketpos.app.repository.PaymentViewModel;
-import br.com.pocketpos.data.room.PaymentModel;
+import br.com.pocketpos.data.room.ReceiptMethodModel;
 
 
 public class CatalogCartPaymentsFragment extends Fragment {
@@ -77,7 +77,7 @@ public class CatalogCartPaymentsFragment extends Fragment {
         recyclerView.addItemDecoration(new GridLayoutSpaceItemDecoration(10));
 
         paymentFormRecyclerViewAdapter = new CatalogCartPaymentsFormRecyclerViewAdapter(
-                new ArrayList<PaymentModel>(),
+                new ArrayList<ReceiptMethodModel>(),
                 moneyOnClickListener,
                 creditCardOnClickListener,
                 debitCardOnClickListener,
@@ -89,9 +89,9 @@ public class CatalogCartPaymentsFragment extends Fragment {
 
         paymentFormViewModel = ViewModelProviders.of(this).get(PaymentViewModel.class);
 
-        paymentFormViewModel.getPayments().observe(CatalogCartPaymentsFragment.this, new Observer<List<PaymentModel>>() {
+        paymentFormViewModel.getPayments().observe(CatalogCartPaymentsFragment.this, new Observer<List<ReceiptMethodModel>>() {
 
-            public void onChanged(@Nullable List<PaymentModel> payments) {
+            public void onChanged(@Nullable List<ReceiptMethodModel> payments) {
 
                 paymentFormRecyclerViewAdapter.setPayments(payments);
 

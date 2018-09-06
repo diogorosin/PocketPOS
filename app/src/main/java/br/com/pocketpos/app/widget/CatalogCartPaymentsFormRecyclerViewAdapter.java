@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import br.com.pocketpos.R;
-import br.com.pocketpos.data.room.PaymentModel;
+import br.com.pocketpos.data.room.ReceiptMethodModel;
 
 public class CatalogCartPaymentsFormRecyclerViewAdapter
         extends RecyclerView.Adapter<CatalogCartPaymentsFormRecyclerViewAdapter.CatalogCartPaymentsFormViewHolder>{
@@ -34,11 +34,11 @@ public class CatalogCartPaymentsFormRecyclerViewAdapter
     private View.OnClickListener checkOnClickListener;
 
 
-    private List<PaymentModel> payments;
+    private List<ReceiptMethodModel> payments;
 
 
     public CatalogCartPaymentsFormRecyclerViewAdapter(
-            List<PaymentModel> payments,
+            List<ReceiptMethodModel> payments,
             View.OnClickListener moneyOnClickListener,
             View.OnClickListener creditCardOnClickListener,
             View.OnClickListener debitCardOnClickListener,
@@ -144,7 +144,7 @@ public class CatalogCartPaymentsFormRecyclerViewAdapter
     }
 
 
-    public void setPayments(List<PaymentModel> payments){
+    public void setPayments(List<ReceiptMethodModel> payments){
 
         this.payments = payments;
 
@@ -155,7 +155,7 @@ public class CatalogCartPaymentsFormRecyclerViewAdapter
 
     public class CatalogCartPaymentsFormViewHolder extends RecyclerView.ViewHolder {
 
-        public PaymentModel paymentModel;
+        public ReceiptMethodModel paymentModel;
 
         public Button button;
 

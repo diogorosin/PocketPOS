@@ -54,7 +54,7 @@ public final class SupplyCashAsyncTask<A extends Activity & SupplyCashAsyncTask.
 
             cashVO.setDateTime(new Date());
 
-            cashVO.setPayment("DIN");
+            cashVO.setMethod("DIN");
 
             cashVO.setOrigin(null);
 
@@ -82,7 +82,7 @@ public final class SupplyCashAsyncTask<A extends Activity & SupplyCashAsyncTask.
 
             cashModel.setOrigin(cashVO.getOrigin());
 
-            cashModel.setPayment(cashVO.getPayment());
+            cashModel.setMethod(cashVO.getMethod());
 
             cashModel.setTotal(cashVO.getTotal());
 

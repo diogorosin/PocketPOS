@@ -65,7 +65,7 @@ public class CashSummaryRecyclerViewAdapter extends RecyclerView.Adapter<CashSum
 
         Integer payment;
 
-        switch (cashModelList.get(position).getPayment()){
+        switch (cashModelList.get(position).getMethod()){
 
             case "DIN": payment = R.string.money;
                 break;
