@@ -1,7 +1,6 @@
 package br.com.pocketpos.app.widget;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
@@ -31,7 +30,7 @@ public class CatalogCartFragment
 
     private static final int ITEMS_STEP = 0;
 
-    private static final int PAYMENT_STEP = 1;
+    private static final int RECEIPT_STEP = 1;
 
     private static final int FINISH_STEP = 2;
 
@@ -132,7 +131,7 @@ public class CatalogCartFragment
 
             case 1:
 
-                title.setText(R.string.pay);
+                title.setText(R.string.receipt);
 
                 break;
 
@@ -175,7 +174,7 @@ public class CatalogCartFragment
                 selectedDot = 0;
                 break;
 
-            case PAYMENT_STEP:
+            case RECEIPT_STEP:
 
                 selectedDot = 1;
                 break;

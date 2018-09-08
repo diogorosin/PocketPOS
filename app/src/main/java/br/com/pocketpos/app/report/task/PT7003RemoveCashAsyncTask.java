@@ -81,7 +81,7 @@ public class PT7003RemoveCashAsyncTask<
 
         firstWay.setUserName(cashModels[0].getUser().getName());
 
-        firstWay.setValue(cashModels[0].getTotal());
+        firstWay.setValue(cashModels[0].getValue());
 
         firstWay.print();
 
@@ -101,7 +101,7 @@ public class PT7003RemoveCashAsyncTask<
 
         secondWay.setUserName(cashModels[0].getUser().getName());
 
-        secondWay.setValue(cashModels[0].getTotal());
+        secondWay.setValue(cashModels[0].getValue());
 
         secondWay.print();
 

@@ -21,21 +21,21 @@ import br.com.pocketpos.core.util.StringUtils;
 import br.com.pocketpos.data.room.CatalogItemModel;
 
 
-public class CatalogCartItemsFragment extends Fragment {
+public class CatalogCartItemFragment extends Fragment {
 
 
     private CatalogItemViewModel viewModel;
 
-    private CatalogCartItemsRecyclerViewAdapter recyclerViewAdapter;
+    private CatalogCartItemRecyclerViewAdapter recyclerViewAdapter;
 
     private TextView subtotalTextView;
 
     private TextView payTextView;
 
 
-    public static CatalogCartItemsFragment newInstance() {
+    public static CatalogCartItemFragment newInstance() {
 
-        CatalogCartItemsFragment fragment = new CatalogCartItemsFragment();
+        CatalogCartItemFragment fragment = new CatalogCartItemFragment();
 
         Bundle args = new Bundle();
 
@@ -48,17 +48,17 @@ public class CatalogCartItemsFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.activity_catalog_cart_items_view, container, false);
+        View view = inflater.inflate(R.layout.activity_catalog_cart_item_view, container, false);
 
         subtotalTextView = view.findViewById(R.id.activity_catalog_cart_subtotal);
 
         payTextView = view.findViewById(R.id.activity_catalog_cart_total);
 
-        RecyclerView recyclerView = view.findViewById(R.id.activity_catalog_cart_items_recyclerview);
+        RecyclerView recyclerView = view.findViewById(R.id.activity_catalog_cart_item_recyclerview);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        recyclerViewAdapter = new CatalogCartItemsRecyclerViewAdapter(new ArrayList<CatalogItemModel>());
+        recyclerViewAdapter = new CatalogCartItemRecyclerViewAdapter(new ArrayList<CatalogItemModel>());
 
         recyclerViewAdapter.setHasStableIds(true);
 
@@ -66,7 +66,7 @@ public class CatalogCartItemsFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(CatalogItemViewModel.class);
 
-        viewModel.getCatalogItemsOfCart().observe(CatalogCartItemsFragment.this, new Observer<List<CatalogItemModel>>() {
+        viewModel.getCatalogItemsOfCart().observe(CatalogCartItemFragment.this, new Observer<List<CatalogItemModel>>() {
 
             public void onChanged(@Nullable List<CatalogItemModel> catalogItems) {
 
@@ -76,7 +76,7 @@ public class CatalogCartItemsFragment extends Fragment {
 
         });
 
-        viewModel.getSubtotalOfCart().observe(CatalogCartItemsFragment.this, new Observer<Double>() {
+        viewModel.getSubtotalOfCart().observe(CatalogCartItemFragment.this, new Observer<Double>() {
 
             public void onChanged(@Nullable Double subtotal) {
 
@@ -86,7 +86,7 @@ public class CatalogCartItemsFragment extends Fragment {
 
         });
 
-        viewModel.getTotalOfCart().observe(CatalogCartItemsFragment.this, new Observer<Double>() {
+        viewModel.getTotalOfCart().observe(CatalogCartItemFragment.this, new Observer<Double>() {
 
             public void onChanged(@Nullable Double total) {
 

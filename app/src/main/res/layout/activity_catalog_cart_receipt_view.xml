@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/activity_catalog_cart_payments_form_panel"
+        android:id="@+id/activity_catalog_cart_receipt_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="horizontal">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/activity_catalog_cart_payments_form_recyclerview"
+            android:id="@+id/activity_catalog_cart_receipt_method_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clipChildren="false"
-            android:clipToPadding="false"
-            tools:listitem="@layout/activity_catalog_cart_payments_form_money" />
+            android:clipToPadding="false"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/activity_catalog_cart_payments_list_recyclerview"
+            android:id="@+id/activity_catalog_cart_receipt_list_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:listitem="@layout/activity_catalog_cart_payments_list_row" />
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
@@ -52,7 +49,7 @@
                 android:textColor="@color/colorAccent" />
 
             <TextView
-                android:id="@+id/activity_catalog_cart_payments_total"
+                android:id="@+id/activity_catalog_cart_receipt_total"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="25dp"
@@ -81,7 +78,7 @@
                 android:textColor="@color/colorAccent" />
 
             <TextView
-                android:id="@+id/activity_catalog_cart_payments_received"
+                android:id="@+id/activity_catalog_cart_receipt_received"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="25dp"
@@ -110,7 +107,7 @@
                 android:textColor="@color/colorAccent" />
 
             <TextView
-                android:id="@+id/activity_catalog_cart_toreceive"
+                android:id="@+id/activity_catalog_cart_receipt_toreceive"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="25dp"

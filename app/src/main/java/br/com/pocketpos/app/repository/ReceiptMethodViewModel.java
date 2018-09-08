@@ -11,34 +11,30 @@ import br.com.pocketpos.data.room.ReceiptMethodDAO;
 import br.com.pocketpos.data.room.ReceiptMethodModel;
 import br.com.pocketpos.data.util.DB;
 
-public class PaymentViewModel extends AndroidViewModel {
+public class ReceiptMethodViewModel extends AndroidViewModel {
 
+    private LiveData<List<ReceiptMethodModel>> receiptMethods;
 
-    private LiveData<List<ReceiptMethodModel>> payments;
-
-
-    public PaymentViewModel(@NonNull Application application) {
+    public ReceiptMethodViewModel(@NonNull Application application) {
 
         super(application);
 
     }
 
+    public LiveData<List<ReceiptMethodModel>> getReceiptMethods() {
 
-    public LiveData<List<ReceiptMethodModel>> getPayments() {
-
-        if (payments ==null) {
+        if (receiptMethods ==null) {
 
             ReceiptMethodDAO receiptMethodDAO = DB.getInstance(
                     getApplication()).
                     receiptMethodDAO();
 
-            payments = receiptMethodDAO.list();
+            receiptMethods = receiptMethodDAO.list();
 
         }
 
-        return payments;
+        return receiptMethods;
 
     }
-
 
 }

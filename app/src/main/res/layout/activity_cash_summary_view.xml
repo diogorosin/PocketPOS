@@ -16,16 +16,8 @@
             android:gravity="center_vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.2"
+            android:layout_weight="1"
             android:text="@string/operation"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
-            android:text="@string/method"
             android:textStyle="bold"/>
 
         <TextView
@@ -59,56 +51,21 @@
         android:layout_height="40dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.2"
-            android:textStyle="bold"/>
-
-        <TextView
+<!--        <TextView
             android:gravity="center_vertical|left"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.8"
+            android:layout_weight="1"
             android:text="@string/money"
-            android:textStyle="bold"/>
+            android:textStyle="bold"/>  -->
 
         <TextView
-            android:id="@+id/activity_cash_summary_money_textview"
+            android:id="@+id/activity_cash_summary_value_textview"
             android:gravity="center_vertical|right"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textStyle="bold"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.2"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:gravity="center_vertical|left"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
-            android:text="@string/card"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/activity_cash_summary_card_textview"
-            android:gravity="center_vertical|right"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textStyle="bold" />
 
     </LinearLayout>
 

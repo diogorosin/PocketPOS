@@ -13,26 +13,21 @@ import br.com.pocketpos.data.util.DB;
 
 public class CashViewModel extends AndroidViewModel {
 
-
     private LiveData<Boolean> isOpen;
 
     private LiveData<Double> total;
 
-    private LiveData<Double> money;
-
-    private LiveData<Double> card;
+    private LiveData<Double> value;
 
     private LiveData<List<CashModel>> cashSummary;
 
     private LiveData<List<CashModel>> cashEntry;
-
 
     public CashViewModel(@NonNull Application application) {
 
         super(application);
 
     }
-
 
     public LiveData<Boolean> isOpen() {
 
@@ -50,57 +45,21 @@ public class CashViewModel extends AndroidViewModel {
 
     }
 
+    public LiveData<Double> value() {
 
-    public LiveData<Double> money() {
-
-        if (money==null) {
-
-            CashDAO cashDAO = DB.getInstance(
-                    getApplication()).
-                    cashDAO();
-
-            money = cashDAO.money();
-
-        }
-
-        return money;
-
-    }
-
-
-    public LiveData<Double> card() {
-
-        if (card==null) {
+        if (value ==null) {
 
             CashDAO cashDAO = DB.getInstance(
                     getApplication()).
                     cashDAO();
 
-            card = cashDAO.card();
+            value = cashDAO.value();
 
         }
 
-        return card;
+        return value;
 
     }
-
-
-    public LiveData<Double> total() {
-
-        if (total==null) {
-
-            CashDAO cashDAO = DB.getInstance(
-                    getApplication()).
-                    cashDAO();
-
-            total = cashDAO.total();
-
-        }
-
-        return total;
-
-    }
-
 
     public LiveData<List<CashModel>> cashSummary() {
 
@@ -118,7 +77,6 @@ public class CashViewModel extends AndroidViewModel {
 
     }
 
-
     public LiveData<List<CashModel>> cashEntry() {
 
         if (cashEntry ==null) {
@@ -134,6 +92,5 @@ public class CashViewModel extends AndroidViewModel {
         return cashEntry;
 
     }
-
 
 }

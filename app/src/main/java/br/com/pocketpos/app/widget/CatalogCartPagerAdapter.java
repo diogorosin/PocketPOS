@@ -18,11 +18,11 @@ public class CatalogCartPagerAdapter extends FragmentPagerAdapter {
 
             case 0:
 
-                return CatalogCartItemsFragment.newInstance();
+                return CatalogCartItemFragment.newInstance();
 
             case 1:
 
-                return CatalogCartPaymentsFragment.newInstance();
+                return CatalogCartReceiptFragment.newInstance();
 
             default:
 

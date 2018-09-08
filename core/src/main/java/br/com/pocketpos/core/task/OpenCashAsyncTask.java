@@ -46,49 +46,46 @@ public final class OpenCashAsyncTask<A extends Activity & OpenCashAsyncTask.List
 
             database.beginTransaction();
 
+
             CashVO cashVO = new CashVO();
 
             cashVO.setType("E");
 
             cashVO.setOperation("ABE");
 
+            cashVO.setValue(value);
+
+            cashVO.setNote("Abertura do Caixa");
+
             cashVO.setDateTime(new Date());
-
-            cashVO.setMethod("DIN");
-
-            cashVO.setOrigin(null);
-
-            cashVO.setTotal(value);
 
             cashVO.setUser(user);
 
-            cashVO.setNote("Abertura do caixa");
-
             cashVO.setIdentifier(database.cashDAO().create(cashVO).intValue());
 
+
             database.setTransactionSuccessful();
+
 
             CashModel cashModel = new CashModel();
 
             cashModel.setIdentifier(cashVO.getIdentifier());
 
-            cashModel.setDateTime(cashVO.getDateTime());
-
             cashModel.setType(cashVO.getType());
-
-            cashModel.setNote(cashVO.getNote());
 
             cashModel.setOperation(cashVO.getOperation());
 
-            cashModel.setOrigin(cashVO.getOrigin());
+            cashModel.setValue(cashVO.getValue());
 
-            cashModel.setMethod(cashVO.getMethod());
+            cashModel.setNote(cashVO.getNote());
 
-            cashModel.setTotal(cashVO.getTotal());
+            cashModel.setDateTime(cashVO.getDateTime());
 
             cashModel.setUser(database.userDAO().retrieve(cashVO.getUser()));
 
+
             return cashModel;
+
 
         } catch(Exception e) {
 

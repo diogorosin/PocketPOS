@@ -82,7 +82,7 @@ public class PT7003OpenCashAsyncTask<
 
             body.setUserName(cashModel.getUser().getName());
 
-            body.setValue(cashModel.getTotal());
+            body.setValue(cashModel.getValue());
 
             body.print();
 

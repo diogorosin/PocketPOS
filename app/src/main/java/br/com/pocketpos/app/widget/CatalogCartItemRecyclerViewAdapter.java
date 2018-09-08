@@ -13,13 +13,13 @@ import br.com.pocketpos.core.util.Hashids;
 import br.com.pocketpos.core.util.StringUtils;
 import br.com.pocketpos.data.room.CatalogItemModel;
 
-public class CatalogCartItemsRecyclerViewAdapter extends RecyclerView.Adapter<CatalogCartItemsRecyclerViewAdapter.CatalogCartItemViewHolder> {
+public class CatalogCartItemRecyclerViewAdapter extends RecyclerView.Adapter<CatalogCartItemRecyclerViewAdapter.CatalogCartItemViewHolder> {
 
 
     private List<CatalogItemModel> catalogItems;
 
 
-    public CatalogCartItemsRecyclerViewAdapter(List<CatalogItemModel> catalogItems) {
+    public CatalogCartItemRecyclerViewAdapter(List<CatalogItemModel> catalogItems) {
 
         this.catalogItems = catalogItems;
 
@@ -28,7 +28,7 @@ public class CatalogCartItemsRecyclerViewAdapter extends RecyclerView.Adapter<Ca
 
     public CatalogCartItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_catalog_cart_items_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_catalog_cart_item_row, parent, false);
 
         return new CatalogCartItemViewHolder(view);
 
@@ -95,15 +95,15 @@ public class CatalogCartItemsRecyclerViewAdapter extends RecyclerView.Adapter<Ca
 
             super(view);
 
-            title = view.findViewById(R.id.activity_catalog_cart_items_row_title);
+            title = view.findViewById(R.id.activity_catalog_cart_item_row_title);
 
-            quantity = view.findViewById(R.id.activity_catalog_cart_items_row_quantity);
+            quantity = view.findViewById(R.id.activity_catalog_cart_item_row_quantity);
 
-            measureUnit = view.findViewById(R.id.activity_catalog_cart_items_row_measureunit);
+            measureUnit = view.findViewById(R.id.activity_catalog_cart_item_row_measureunit);
 
-            price = view.findViewById(R.id.activity_catalog_cart_items_row_price);
+            price = view.findViewById(R.id.activity_catalog_cart_item_row_price);
 
-            total = view.findViewById(R.id.activity_catalog_cart_items_row_total);
+            total = view.findViewById(R.id.activity_catalog_cart_item_row_total);
 
         }
 

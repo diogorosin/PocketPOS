@@ -31,7 +31,7 @@ public interface SaleItemDAO {
     @Delete
     void delete(SaleItemVO saleItemVO);
 
-    @Query("SELECT SI.sale, SI.item, P.identifier, P.shortDenomination AS denomination, SI.quantity, SI.price, SI.total " +
+    @Query("SELECT SI.sale, SI.item, P.identifier, P.shortDenomination AS denomination, SI.quantity, SI.price, SI.value " +
             "FROM SaleItem SI " +
             "INNER JOIN Product P ON SI.product = P.identifier " +
             "INNER JOIN Sale S ON SI.sale = S.identifier " +
@@ -41,7 +41,7 @@ public interface SaleItemDAO {
             "ORDER BY F.position, FP.position")
     LiveData<List<CatalogItemModel>> liveDataListBySaleAndFolder(int sale, int folder);
 
-    @Query("SELECT SI.sale, SI.item, P.identifier, P.shortDenomination AS denomination, SI.quantity, SI.price, SI.total " +
+    @Query("SELECT SI.sale, SI.item, P.identifier, P.shortDenomination AS denomination, SI.quantity, SI.price, SI.value " +
             "FROM SaleItem SI " +
             "INNER JOIN Product P ON SI.product = P.identifier " +
             "INNER JOIN Sale S ON SI.sale = S.identifier " +

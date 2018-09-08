@@ -11,7 +11,6 @@ import java.util.List;
 import br.com.pocketpos.app.report.ReportName;
 import br.com.pocketpos.app.report.adapter.OnPrintListener;
 import br.com.pocketpos.app.report.layout.PT7003HeaderLayout;
-import br.com.pocketpos.app.report.layout.PT7003OpenCashLayout;
 import br.com.pocketpos.app.report.layout.PT7003SupplyCashLayout;
 import br.com.pocketpos.data.room.CashModel;
 
@@ -83,7 +82,7 @@ public class PT7003SupplyCashAsyncTask<
 
             body.setUserName(cashModel.getUser().getName());
 
-            body.setValue(cashModel.getTotal());
+            body.setValue(cashModel.getValue());
 
             body.print();
 

@@ -9,16 +9,15 @@ import android.support.annotation.NonNull;
 
 import java.util.Date;
 
+
 /*
     IDENTIFIER: IDENTIFICADOR DO LANCAMENTO
-    METHOD....: METODO/FORMA DE PAGAMENTO/RECEBIMENTO
     OPERATION.: CODIGO DA OPERACAO (ABE=ABERTURA, FEC=FECHAMENTO, SAN=SANGRIA, SUP=SUPRIMENTO, VEN=VENDA)
-    ORIGIN....: ORIGEM (NUMERO DA VENDA)
     TYPE......: TIPO DA OPERACAO (E=ENTRADA, S=SAIDA)
+    VALUE.....: VALOR DO LANCAMENTO
     NOTE......: OBSERVACOES
-    DATETIME..: DATA E HORA
     USER......: IDENTIFICADOR DO USUARIO
-    TOTAL.....: TOTAL DO LANCAMENTO
+    DATETIME..: DATA E HORA
 */
 @Entity(tableName = "Cash",
         foreignKeys = {
@@ -34,30 +33,24 @@ public class CashVO {
     private Integer identifier;
 
     @ColumnInfo
-    private String method;
-
-    @ColumnInfo
     private String operation;
-
-    @ColumnInfo
-    private Integer origin;
 
     @ColumnInfo
     private String type;
 
     @ColumnInfo
+    private Double value;
+
+    @ColumnInfo
     private String note;
+
+    @ColumnInfo
+    private Integer user;
 
     @NonNull
     @ColumnInfo(name="dateTime")
     @TypeConverters({TimestampConverter.class})
     private Date dateTime;
-
-    @ColumnInfo
-    private Integer user;
-
-    @ColumnInfo
-    private Double total;
 
     public Integer getIdentifier() {
 
@@ -68,18 +61,6 @@ public class CashVO {
     public void setIdentifier(Integer identifier) {
 
         this.identifier = identifier;
-
-    }
-
-    public String getMethod() {
-
-        return method;
-
-    }
-
-    public void setMethod(String method) {
-
-        this.method = method;
 
     }
 
@@ -95,18 +76,6 @@ public class CashVO {
 
     }
 
-    public Integer getOrigin() {
-
-        return origin;
-
-    }
-
-    public void setOrigin(Integer origin) {
-
-        this.origin = origin;
-
-    }
-
     public String getType() {
 
         return type;
@@ -116,6 +85,18 @@ public class CashVO {
     public void setType(String type) {
 
         this.type = type;
+
+    }
+
+    public Double getValue() {
+
+        return value;
+
+    }
+
+    public void setValue(Double value) {
+
+        this.value = value;
 
     }
 
@@ -131,18 +112,6 @@ public class CashVO {
 
     }
 
-    public Date getDateTime() {
-
-        return dateTime;
-
-    }
-
-    public void setDateTime(Date dateTime) {
-
-        this.dateTime = dateTime;
-
-    }
-
     public Integer getUser() {
 
         return user;
@@ -155,15 +124,15 @@ public class CashVO {
 
     }
 
-    public Double getTotal() {
+    public Date getDateTime() {
 
-        return total;
+        return dateTime;
 
     }
 
-    public void setTotal(Double total) {
+    public void setDateTime(Date dateTime) {
 
-        this.total = total;
+        this.dateTime = dateTime;
 
     }
 

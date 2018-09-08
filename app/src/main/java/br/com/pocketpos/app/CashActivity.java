@@ -188,8 +188,7 @@ public class CashActivity extends AppCompatActivity implements
 
         });
 
-
-        cashViewModel.money().observe(CashActivity.this, new Observer<Double>() {
+        cashViewModel.value().observe(CashActivity.this, new Observer<Double>() {
 
             public void onChanged(final Double money) {
 
@@ -197,31 +196,13 @@ public class CashActivity extends AppCompatActivity implements
 
                 moneyTextView.setText(StringUtils.formatCurrencyWithSymbol(money));
 
-                TextView totalMoneyTextView = findViewById(R.id.activity_cash_summary_money_textview);
+                TextView totalMoneyTextView = findViewById(R.id.activity_cash_summary_value_textview);
 
                 totalMoneyTextView.setText(StringUtils.formatCurrencyWithSymbol(money));
 
             }
 
         });
-
-
-        cashViewModel.card().observe(CashActivity.this, new Observer<Double>() {
-
-            public void onChanged(final Double card) {
-
-                TextView cardTextView = findViewById(R.id.activity_cash_card_textview);
-
-                cardTextView.setText(StringUtils.formatCurrencyWithSymbol(card));
-
-                TextView totalCardTextView = findViewById(R.id.activity_cash_summary_card_textview);
-
-                totalCardTextView.setText(StringUtils.formatCurrencyWithSymbol(card));
-
-            }
-
-        });
-
 
         RecyclerView cashSummaryRecyclerView = findViewById(R.id.activity_cash_summary_recyclerview);
 
@@ -500,15 +481,15 @@ public class CashActivity extends AppCompatActivity implements
     }
 
 
-    public void onCloseCash(Double money, Double card) {
+    public void onCloseCash(Double value) {
 
         new CloseCashAsyncTask(this).
-                execute(money, card, preferences.getInt(Constants.USER_IDENTIFIER_PROPERTY, 0));
+                execute(value, preferences.getInt(Constants.USER_IDENTIFIER_PROPERTY, 0));
 
     }
 
 
-    public void onCloseCashSuccess(CashModel moneyCashModel, CashModel cardCashModel) {
+    public void onCloseCashSuccess(CashModel cashModel) {
 
         new SummaryCashReportAsyncTask<>(this).execute();
 

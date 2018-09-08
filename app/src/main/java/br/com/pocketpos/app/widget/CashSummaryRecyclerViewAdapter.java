@@ -63,29 +63,13 @@ public class CashSummaryRecyclerViewAdapter extends RecyclerView.Adapter<CashSum
 
         }
 
-        Integer payment;
-
-        switch (cashModelList.get(position).getMethod()){
-
-            case "DIN": payment = R.string.money;
-                break;
-
-            case "CAR": payment = R.string.card;
-                break;
-
-            default: payment = R.string.undefined;
-
-        }
-
         String type = cashModelList.get(position).getType();
 
-        Double total = cashModelList.get(position).getTotal();
+        Double value = cashModelList.get(position).getValue();
 
         holder.operation.setText(operation);
 
-        holder.payment.setText(payment);
-
-        holder.total.setText(StringUtils.formatCurrencyWithSymbol(type.equals("S") ? total * -1 : total));
+        holder.value.setText(StringUtils.formatCurrencyWithSymbol(type.equals("S") ? value * -1 : value));
 
     }
 
@@ -119,9 +103,7 @@ public class CashSummaryRecyclerViewAdapter extends RecyclerView.Adapter<CashSum
 
         public TextView operation;
 
-        public TextView payment;
-
-        public TextView total;
+        public TextView value;
 
         CashSummaryViewHolder(View view) {
 
@@ -129,9 +111,7 @@ public class CashSummaryRecyclerViewAdapter extends RecyclerView.Adapter<CashSum
 
             operation = view.findViewById(R.id.activity_cash_summary_row_operation_textview);
 
-            payment = view.findViewById(R.id.activity_cash_summary_row_payment_textview);
-
-            total = view.findViewById(R.id.activity_cash_summary_row_total_textview);
+            value = view.findViewById(R.id.activity_cash_summary_row_value_textview);
 
         }
 

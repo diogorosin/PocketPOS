@@ -9,28 +9,22 @@ import java.util.Date;
 
 public class CashModel {
 
-
     private Integer identifier;
-
-    private String method;
 
     private String operation;
 
-    private Integer origin;
-
     private String type;
 
-    private String note;
+    private Double value;
 
-    @ColumnInfo(name="dateTime")
-    @TypeConverters({TimestampConverter.class})
-    private Date dateTime;
+    private String note;
 
     @Embedded(prefix = "user_")
     private UserVO user;
 
-    private Double total;
-
+    @ColumnInfo(name="dateTime")
+    @TypeConverters({TimestampConverter.class})
+    private Date dateTime;
 
     public Integer getIdentifier() {
 
@@ -44,18 +38,6 @@ public class CashModel {
 
     }
 
-    public String getMethod() {
-
-        return method;
-
-    }
-
-    public void setMethod(String method) {
-
-        this.method = method;
-
-    }
-
     public String getOperation() {
 
         return operation;
@@ -65,18 +47,6 @@ public class CashModel {
     public void setOperation(String operation) {
 
         this.operation = operation;
-
-    }
-
-    public Integer getOrigin() {
-
-        return origin;
-
-    }
-
-    public void setOrigin(Integer origin) {
-
-        this.origin = origin;
 
     }
 
@@ -129,15 +99,15 @@ public class CashModel {
 
     }
 
-    public Double getTotal() {
+    public Double getValue() {
 
-        return total;
+        return value;
 
     }
 
-    public void setTotal(Double total) {
+    public void setValue(Double value) {
 
-        this.total = total;
+        this.value = value;
 
     }
 

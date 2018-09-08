@@ -75,20 +75,6 @@ public class CashEntryRecyclerViewAdapter extends RecyclerView.Adapter<CashEntry
 
         }
 
-        Integer payment;
-
-        switch (cashModelList.get(position).getMethod()){
-
-            case "DIN": payment = R.string.money;
-                break;
-
-            case "CAR": payment = R.string.card;
-                break;
-
-            default: payment = R.string.undefined;
-
-        }
-
         Integer type;
 
         switch (cashModelList.get(position).getType()){
@@ -103,11 +89,9 @@ public class CashEntryRecyclerViewAdapter extends RecyclerView.Adapter<CashEntry
 
         }
 
-        Double total = cashModelList.get(position).getTotal();
+        Double total = cashModelList.get(position).getValue();
 
         holder.operation.setText(operation);
-
-        holder.payment.setText(payment);
 
         holder.dateTime.setText(StringUtils.formatShortDateTime(cashModelList.get(position).getDateTime()));
 
@@ -156,8 +140,6 @@ public class CashEntryRecyclerViewAdapter extends RecyclerView.Adapter<CashEntry
 
         public TextView operation;
 
-        public TextView payment;
-
         public TextView dateTime;
 
         public TextView value;
@@ -174,8 +156,6 @@ public class CashEntryRecyclerViewAdapter extends RecyclerView.Adapter<CashEntry
             super(view);
 
             operation = view.findViewById(R.id.activity_cash_entry_row_operation_textview);
-
-            payment = view.findViewById(R.id.activity_cash_entry_row_payment_textview);
 
             dateTime = view.findViewById(R.id.activity_cash_entry_row_datetime_textview);
 

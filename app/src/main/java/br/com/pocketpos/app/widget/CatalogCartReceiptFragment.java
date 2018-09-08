@@ -15,20 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.pocketpos.R;
-import br.com.pocketpos.app.repository.PaymentViewModel;
+import br.com.pocketpos.app.repository.ReceiptMethodViewModel;
 import br.com.pocketpos.data.room.ReceiptMethodModel;
 
 
-public class CatalogCartPaymentsFragment extends Fragment {
+public class CatalogCartReceiptFragment extends Fragment {
 
+    private ReceiptMethodViewModel receiptMethodViewModel;
 
-    private PaymentViewModel paymentFormViewModel;
-
-    private CatalogCartPaymentsFormRecyclerViewAdapter paymentFormRecyclerViewAdapter;
+    private CatalogCartReceiptMethodRecyclerViewAdapter receiptMethodRecyclerViewAdapter;
 
     private View.OnClickListener moneyOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-
 
         }
     };
@@ -45,17 +43,15 @@ public class CatalogCartPaymentsFragment extends Fragment {
         }
     };
 
-
     private View.OnClickListener checkOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
 
         }
     };
 
+    public static CatalogCartReceiptFragment newInstance() {
 
-    public static CatalogCartPaymentsFragment newInstance() {
-
-        CatalogCartPaymentsFragment fragment = new CatalogCartPaymentsFragment();
+        CatalogCartReceiptFragment fragment = new CatalogCartReceiptFragment();
 
         Bundle args = new Bundle();
 
@@ -68,32 +64,32 @@ public class CatalogCartPaymentsFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.activity_catalog_cart_payments_view, container, false);
+        View view = inflater.inflate(R.layout.activity_catalog_cart_receipt_view, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.activity_catalog_cart_payments_form_recyclerview);
+        RecyclerView recyclerView = view.findViewById(R.id.activity_catalog_cart_receipt_method_recyclerview);
 
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
 
         recyclerView.addItemDecoration(new GridLayoutSpaceItemDecoration(10));
 
-        paymentFormRecyclerViewAdapter = new CatalogCartPaymentsFormRecyclerViewAdapter(
+        receiptMethodRecyclerViewAdapter = new CatalogCartReceiptMethodRecyclerViewAdapter(
                 new ArrayList<ReceiptMethodModel>(),
                 moneyOnClickListener,
                 creditCardOnClickListener,
                 debitCardOnClickListener,
                 checkOnClickListener);
 
-        paymentFormRecyclerViewAdapter.setHasStableIds(true);
+        receiptMethodRecyclerViewAdapter.setHasStableIds(true);
 
-        recyclerView.setAdapter(paymentFormRecyclerViewAdapter);
+        recyclerView.setAdapter(receiptMethodRecyclerViewAdapter);
 
-        paymentFormViewModel = ViewModelProviders.of(this).get(PaymentViewModel.class);
+        receiptMethodViewModel = ViewModelProviders.of(this).get(ReceiptMethodViewModel.class);
 
-        paymentFormViewModel.getPayments().observe(CatalogCartPaymentsFragment.this, new Observer<List<ReceiptMethodModel>>() {
+        receiptMethodViewModel.getReceiptMethods().observe(CatalogCartReceiptFragment.this, new Observer<List<ReceiptMethodModel>>() {
 
             public void onChanged(@Nullable List<ReceiptMethodModel> payments) {
 
-                paymentFormRecyclerViewAdapter.setPayments(payments);
+                receiptMethodRecyclerViewAdapter.setReceiptMethods(payments);
 
             }
 

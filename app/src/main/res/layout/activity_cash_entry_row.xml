@@ -29,13 +29,6 @@
             android:layout_weight="1"/>
 
         <TextView
-            android:id="@+id/activity_cash_entry_row_payment_textview"
-            android:gravity="center_vertical|left"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
-
-        <TextView
             android:id="@+id/activity_cash_entry_row_value_textview"
             android:gravity="center_vertical|right"
             android:layout_width="0dp"

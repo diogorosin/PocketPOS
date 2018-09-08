@@ -46,47 +46,43 @@ public final class RemovalCashAsyncTask<A extends Activity & RemovalCashAsyncTas
 
             database.beginTransaction();
 
+
             CashVO cashVO = new CashVO();
 
             cashVO.setType("S");
 
             cashVO.setOperation("SAN");
 
-            cashVO.setDateTime(new Date());
+            cashVO.setValue(value);
 
-            cashVO.setMethod("DIN");
-
-            cashVO.setOrigin(null);
-
-            cashVO.setTotal(value);
+            cashVO.setNote("Sangria do Caixa");
 
             cashVO.setUser(user);
 
-            cashVO.setNote("Sangria do caixa");
+            cashVO.setDateTime(new Date());
 
             cashVO.setIdentifier(database.cashDAO().create(cashVO).intValue());
 
+
             database.setTransactionSuccessful();
+
 
             CashModel cashModel = new CashModel();
 
             cashModel.setIdentifier(cashVO.getIdentifier());
 
-            cashModel.setDateTime(cashVO.getDateTime());
-
             cashModel.setType(cashVO.getType());
-
-            cashModel.setNote(cashVO.getNote());
 
             cashModel.setOperation(cashVO.getOperation());
 
-            cashModel.setOrigin(cashVO.getOrigin());
+            cashModel.setValue(cashVO.getValue());
 
-            cashModel.setMethod(cashVO.getMethod());
-
-            cashModel.setTotal(cashVO.getTotal());
+            cashModel.setNote(cashVO.getNote());
 
             cashModel.setUser(database.userDAO().retrieve(cashVO.getUser()));
+
+            cashModel.setDateTime(cashVO.getDateTime());
+
 
             return cashModel;
 

@@ -28,11 +28,9 @@ public final class CloseCashAsyncTask<A extends Activity & CloseCashAsyncTask.Li
 
     protected Object doInBackground(Object... parameters) {
 
-        Double money = (Double) parameters[0];
+        Double value = (Double) parameters[0];
 
-        Double card = (Double) parameters[1];
-
-        Integer user = (Integer) parameters[2];
+        Integer user = (Integer) parameters[1];
 
         Date date = new Date();
 
@@ -51,94 +49,44 @@ public final class CloseCashAsyncTask<A extends Activity & CloseCashAsyncTask.Li
             database.beginTransaction();
 
 
-            CashVO moneyCashVO = new CashVO();
+            CashVO cashVO = new CashVO();
 
-            moneyCashVO.setType("S");
+            cashVO.setType("S");
 
-            moneyCashVO.setOperation("FEC");
+            cashVO.setOperation("FEC");
 
-            moneyCashVO.setDateTime(date);
+            cashVO.setValue(value);
 
-            moneyCashVO.setMethod("DIN");
+            cashVO.setNote("Fechamento do Caixa");
 
-            moneyCashVO.setOrigin(null);
+            cashVO.setUser(user);
 
-            moneyCashVO.setTotal(money);
+            cashVO.setDateTime(date);
 
-            moneyCashVO.setUser(user);
-
-            moneyCashVO.setNote("Fechamento do caixa (Dinheiro)");
-
-            moneyCashVO.setIdentifier(database.cashDAO().create(moneyCashVO).intValue());
-
-
-            CashVO cardCashVO = new CashVO();
-
-            cardCashVO.setType("S");
-
-            cardCashVO.setOperation("FEC");
-
-            cardCashVO.setDateTime(date);
-
-            cardCashVO.setMethod("CCR");
-
-            cardCashVO.setOrigin(null);
-
-            cardCashVO.setTotal(card);
-
-            cardCashVO.setUser(user);
-
-            cardCashVO.setNote("Fechamento do caixa (Cartão de Crédito)");
-
-            cardCashVO.setIdentifier(database.cashDAO().create(cardCashVO).intValue());
+            cashVO.setIdentifier(database.cashDAO().create(cashVO).intValue());
 
 
             database.setTransactionSuccessful();
 
 
-            CashModel moneyCashModel = new CashModel();
+            CashModel cashModel = new CashModel();
 
-            moneyCashModel.setIdentifier(moneyCashVO.getIdentifier());
+            cashModel.setIdentifier(cashVO.getIdentifier());
 
-            moneyCashModel.setDateTime(moneyCashVO.getDateTime());
+            cashModel.setType(cashVO.getType());
 
-            moneyCashModel.setType(moneyCashVO.getType());
+            cashModel.setOperation(cashVO.getOperation());
 
-            moneyCashModel.setNote(moneyCashVO.getNote());
+            cashModel.setValue(cashVO.getValue());
 
-            moneyCashModel.setOperation(moneyCashVO.getOperation());
+            cashModel.setNote(cashVO.getNote());
 
-            moneyCashModel.setOrigin(moneyCashVO.getOrigin());
+            cashModel.setDateTime(cashVO.getDateTime());
 
-            moneyCashModel.setMethod(moneyCashVO.getMethod());
-
-            moneyCashModel.setTotal(moneyCashVO.getTotal());
-
-            moneyCashModel.setUser(database.userDAO().retrieve(moneyCashVO.getUser()));
+            cashModel.setUser(database.userDAO().retrieve(cashVO.getUser()));
 
 
-            CashModel cardCashModel = new CashModel();
-
-            cardCashModel.setIdentifier(cardCashVO.getIdentifier());
-
-            cardCashModel.setDateTime(cardCashVO.getDateTime());
-
-            cardCashModel.setType(cardCashVO.getType());
-
-            cardCashModel.setNote(cardCashVO.getNote());
-
-            cardCashModel.setOperation(cardCashVO.getOperation());
-
-            cardCashModel.setOrigin(cardCashVO.getOrigin());
-
-            cardCashModel.setMethod(cardCashVO.getMethod());
-
-            cardCashModel.setTotal(cardCashVO.getTotal());
-
-            cardCashModel.setUser(database.userDAO().retrieve(cardCashVO.getUser()));
-
-
-            return new CashModel[]{ moneyCashModel, cardCashModel };
+            return cashModel;
 
         } catch(Exception e) {
 
@@ -161,9 +109,9 @@ public final class CloseCashAsyncTask<A extends Activity & CloseCashAsyncTask.Li
 
         if (listener != null) {
 
-            if (callResult instanceof CashModel[]) {
+            if (callResult instanceof CashModel) {
 
-                listener.onCloseCashSuccess(((CashModel[]) callResult)[0], ((CashModel[]) callResult)[1] );
+                listener.onCloseCashSuccess((CashModel) callResult);
 
             } else {
 
@@ -182,7 +130,7 @@ public final class CloseCashAsyncTask<A extends Activity & CloseCashAsyncTask.Li
 
     public interface Listener {
 
-        void onCloseCashSuccess(CashModel moneyCashModel, CashModel cardCashModel);
+        void onCloseCashSuccess(CashModel cashModel);
 
         void onCloseCashFailure(Messaging messaging);
 

@@ -34,13 +34,9 @@ public class CloseCashDialogFragment extends DialogFragment
 
     private CashSummaryRecyclerViewAdapter recyclerViewAdapter;
 
-    private TextView moneyTextView;
+    private TextView valueTextView;
 
-    private TextView cardTextView;
-
-    private Double money = 0.0;
-
-    private Double card = 0.0;
+    private Double value = 0.0;
 
 
     public void onAttach(Context context) {
@@ -88,7 +84,7 @@ public class CloseCashDialogFragment extends DialogFragment
 
             case DialogInterface.BUTTON_POSITIVE:
 
-                listener.onCloseCash(money, card);
+                listener.onCloseCash(value);
 
                 dialog.dismiss();
 
@@ -103,9 +99,7 @@ public class CloseCashDialogFragment extends DialogFragment
 
         super.onResume();
 
-        moneyTextView = getDialog().findViewById(R.id.activity_cash_summary_money_textview);
-
-        cardTextView = getDialog().findViewById(R.id.activity_cash_summary_card_textview);
+        valueTextView = getDialog().findViewById(R.id.activity_cash_summary_value_textview);
 
         RecyclerView recyclerView = getDialog().findViewById(R.id.activity_cash_summary_recyclerview);
 
@@ -127,25 +121,13 @@ public class CloseCashDialogFragment extends DialogFragment
 
         });
 
-        cashViewModel.money().observe(getActivity(), new Observer<Double>() {
+        cashViewModel.value().observe(getActivity(), new Observer<Double>() {
 
-            public void onChanged(final Double money) {
+            public void onChanged(final Double value) {
 
-                moneyTextView.setText(StringUtils.formatCurrencyWithSymbol(money));
+                valueTextView.setText(StringUtils.formatCurrencyWithSymbol(value));
 
-                CloseCashDialogFragment.this.money = money;
-
-            }
-
-        });
-
-        cashViewModel.card().observe(getActivity(), new Observer<Double>() {
-
-            public void onChanged(final Double card) {
-
-                cardTextView.setText(StringUtils.formatCurrencyWithSymbol(card));
-
-                CloseCashDialogFragment.this.card = card;
+                CloseCashDialogFragment.this.value = value;
 
             }
 
@@ -156,8 +138,8 @@ public class CloseCashDialogFragment extends DialogFragment
 
     public interface Listener {
 
-        void onCloseCash(Double money, Double card);
-
+        void onCloseCash(Double value);
+        
     }
 
 
