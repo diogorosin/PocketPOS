@@ -38,7 +38,7 @@ public class SaleItemVO {
     @ColumnInfo(name="price")
     private Double price;
 
-    @ColumnInfo(name="total")
+    @ColumnInfo(name="received")
     private Double total;
 
     public Integer getSale() {

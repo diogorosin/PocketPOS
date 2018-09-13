@@ -11,7 +11,7 @@ public class RequestBuilder {
 
 //    private static final String REST_SERVER_URL = "http://www.pocketpos.com.br:8080/app/rest/";
 
-    private static final String REST_SERVER_URL = "http://192.168.0.103:8080/PocketPOS-Server/rest/";
+    private static final String REST_SERVER_URL = "http://192.168.0.101:8080/PocketPOS-Server/rest/";
 
     private static Client client;
 

@@ -64,6 +64,7 @@
     <string name="additions">Acréscimos</string>
     <string name="receipt">Recebimento</string>
     <string name="received">Recebido</string>
+    <string name="change">Troco</string>
 
     <!-- Messages        -->
     <string name="error_invalid_email">O login informado é inválido.</string>
@@ -114,5 +115,6 @@
     <string name="check">Cheque</string>
     <string name="credit_card">Cartão de Crédito</string>
     <string name="debit_card">Cartão de Débito</string>
+
 
 </resources>
