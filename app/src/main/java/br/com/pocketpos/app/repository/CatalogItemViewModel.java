@@ -34,7 +34,7 @@ public class CatalogItemViewModel extends AndroidViewModel {
                     getApplication()).
                     catalogItemDAO();
 
-            catalogItems = catalogItemDAO.listByPosition(position);
+            catalogItems = catalogItemDAO.getListLiveDataByPosition(position);
 
         }
 
@@ -50,7 +50,7 @@ public class CatalogItemViewModel extends AndroidViewModel {
                     getApplication()).
                     catalogItemDAO();
 
-            catalogItemsOfCart = catalogItemDAO.list();
+            catalogItemsOfCart = catalogItemDAO.getListLiveData();
 
         }
 
@@ -66,7 +66,7 @@ public class CatalogItemViewModel extends AndroidViewModel {
                     getApplication()).
                     catalogItemDAO();
 
-            subtotalOfCart = catalogItemDAO.subtotal();
+            subtotalOfCart = catalogItemDAO.getSubtotalLiveData();
 
         }
 
@@ -82,7 +82,7 @@ public class CatalogItemViewModel extends AndroidViewModel {
                     getApplication()).
                     catalogItemDAO();
 
-            totalOfCart = catalogItemDAO.total();
+            totalOfCart = catalogItemDAO.getTotalLiveData();
 
         }
 

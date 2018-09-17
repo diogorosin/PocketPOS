@@ -44,11 +44,11 @@ public class CatalogCartPagerAdapter extends FragmentPagerAdapter {
 
             case 0:
 
-                return "Itens";
+                return "Itens da Venda";
 
             case 1:
 
-                return "Pagamentos";
+                return "Recebimentos";
 
             default:
 

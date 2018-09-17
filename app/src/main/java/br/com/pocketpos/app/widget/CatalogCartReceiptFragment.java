@@ -2,6 +2,7 @@ package br.com.pocketpos.app.widget;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,12 +27,14 @@ import br.com.pocketpos.app.repository.ReceiptMethodViewModel;
 import br.com.pocketpos.app.repository.ReceiptViewModel;
 import br.com.pocketpos.core.task.UpdateMoneyReceiptAsyncTask;
 import br.com.pocketpos.core.util.StringUtils;
+import br.com.pocketpos.data.room.CatalogItemModel;
 import br.com.pocketpos.data.room.ReceiptMethodModel;
 import br.com.pocketpos.data.room.ReceiptModel;
 import br.com.pocketpos.data.util.Messaging;
 
 
-public class CatalogCartReceiptFragment extends Fragment implements UpdateMoneyReceiptAsyncTask.Listener{
+public class CatalogCartReceiptFragment extends Fragment
+        implements UpdateMoneyReceiptAsyncTask.Listener{
 
 
     private TextView totalTextView;

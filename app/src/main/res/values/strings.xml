@@ -45,7 +45,7 @@
     <string name="undefined">Indefinido</string>
     <string name="money">Dinheiro</string>
     <string name="card">Cartão</string>
-    <string name="method">Pagamento</string>
+    <string name="method">Forma</string>
     <string name="entries">Lançamentos</string>
     <string name="input">Entrada</string>
     <string name="output">Saída</string>

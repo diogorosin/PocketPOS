@@ -8,8 +8,6 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import br.com.pocketpos.data.room.ProductProductVO;
-
 @Dao
 public interface ProductProductDAO {
 

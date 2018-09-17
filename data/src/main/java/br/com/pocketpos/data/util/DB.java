@@ -25,6 +25,12 @@ import br.com.pocketpos.data.room.ProductProductDAO;
 import br.com.pocketpos.data.room.ProductProductVO;
 import br.com.pocketpos.data.room.ProductVO;
 import br.com.pocketpos.data.room.ReceiptVO;
+import br.com.pocketpos.data.room.SaleCashDAO;
+import br.com.pocketpos.data.room.SaleCashVO;
+import br.com.pocketpos.data.room.SaleDAO;
+import br.com.pocketpos.data.room.SaleItemDAO;
+import br.com.pocketpos.data.room.SaleItemTicketDAO;
+import br.com.pocketpos.data.room.SaleItemTicketVO;
 import br.com.pocketpos.data.room.SaleItemVO;
 import br.com.pocketpos.data.room.SaleVO;
 import br.com.pocketpos.data.room.UserDAO;
@@ -38,12 +44,14 @@ import br.com.pocketpos.data.room.UserVO;
         ProductProductVO.class,
         CatalogVO.class,
         CatalogItemVO.class,
-        SaleVO.class,
-        SaleItemVO.class,
         CashVO.class,
         ReceiptVO.class,
         ReceiptMethodVO.class,
-        PaymentMethodVO.class},
+        PaymentMethodVO.class,
+        SaleVO.class,
+        SaleItemVO.class,
+        SaleCashVO.class,
+        SaleItemTicketVO.class},
         version = 001, exportSchema = false)
 public abstract class DB extends RoomDatabase {
 
@@ -85,5 +93,13 @@ public abstract class DB extends RoomDatabase {
     public abstract ReceiptMethodDAO receiptMethodDAO();
 
     public abstract PaymentMethodDAO paymentMethodDAO();
+
+    public abstract SaleDAO saleDAO();
+
+    public abstract SaleItemDAO saleItemDAO();
+
+    public abstract SaleCashDAO saleCashDAO();
+
+    public abstract SaleItemTicketDAO saleItemTicketDAO();
 
 }

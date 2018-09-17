@@ -36,7 +36,7 @@ public class ReceiptViewModel extends AndroidViewModel {
                     getApplication()).
                     receiptDAO();
 
-            receipts = receiptDAO.list();
+            receipts = receiptDAO.getListLiveData();
 
         }
 
@@ -52,7 +52,7 @@ public class ReceiptViewModel extends AndroidViewModel {
                     getApplication()).
                     catalogItemDAO();
 
-            total = catalogItemDAO.total();
+            total = catalogItemDAO.getTotalLiveData();
 
         }
 
@@ -68,7 +68,7 @@ public class ReceiptViewModel extends AndroidViewModel {
                     getApplication()).
                     receiptDAO();
 
-            received = receiptDAO.received();
+            received = receiptDAO.getAmountReceivedLiveData();
 
         }
 
@@ -84,7 +84,7 @@ public class ReceiptViewModel extends AndroidViewModel {
                     getApplication()).
                     receiptDAO();
 
-            toReceive = receiptDAO.toReceive();
+            toReceive = receiptDAO.getAmountToReceiveLiveData();
 
         }
 

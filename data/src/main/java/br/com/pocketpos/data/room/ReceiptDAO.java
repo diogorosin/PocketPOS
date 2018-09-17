@@ -12,6 +12,14 @@ import java.util.List;
 @Dao
 public interface ReceiptDAO {
 
+    String LIST_QUERY =
+            "SELECT R.*, " +
+            "RM.identifier as 'method_identifier', " +
+            "RM.denomination as 'method_denomination' " +
+            "FROM Receipt R " +
+            "INNER JOIN ReceiptMethod RM ON RM.identifier = R.method " +
+            "ORDER BY R.identifier"; 
+
     @Insert
     void create(ReceiptVO receipt);
 
@@ -24,6 +32,9 @@ public interface ReceiptDAO {
     @Query("SELECT COUNT(*) > 0 FROM Receipt R WHERE R.identifier = :identifier")
     Boolean exists(Integer identifier);
 
+    @Query("DELETE FROM Receipt")
+    void clear();
+
     @Update
     void update(ReceiptVO receipt);
 
@@ -31,22 +42,20 @@ public interface ReceiptDAO {
     void delete(ReceiptVO receipt);
 
     @Query("SELECT COUNT(*) FROM Receipt R")
-    Integer count();
+    Integer getCount();
 
-    @Query("SELECT R.*, " +
-            "RM.identifier as 'method_identifier', " +
-            "RM.denomination as 'method_denomination' " +
-            "FROM Receipt R " +
-            "INNER JOIN ReceiptMethod RM ON RM.identifier = R.method " +
-            "ORDER BY R.identifier")
-    LiveData<List<ReceiptModel>> list();
+    @Query(LIST_QUERY)
+    List<ReceiptModel> getList();
+
+    @Query(LIST_QUERY)
+    LiveData<List<ReceiptModel>> getListLiveData();
 
     @Query("SELECT IFNULL(SUM(R.value), 0) " +
             "FROM Receipt R ")
-    LiveData<Double> received();
+    LiveData<Double> getAmountReceivedLiveData();
 
     @Query("SELECT (SELECT IFNULL(SUM(CI.total), 0) " +
             "FROM CatalogItem CI) - (SELECT IFNULL(SUM(R.value),0) FROM Receipt R) ")
-    LiveData<Double> toReceive();
+    LiveData<Double> getAmountToReceiveLiveData();
 
 }

@@ -38,7 +38,7 @@ public class SaleItemVO {
     @ColumnInfo(name="price")
     private Double price;
 
-    @ColumnInfo(name="received")
+    @ColumnInfo(name="getTotalLiveData")
     private Double total;
 
     public Integer getSale() {

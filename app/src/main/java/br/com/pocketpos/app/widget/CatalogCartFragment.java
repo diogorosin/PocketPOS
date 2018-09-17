@@ -1,6 +1,7 @@
 package br.com.pocketpos.app.widget;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
@@ -25,14 +26,11 @@ public class CatalogCartFragment
         implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
 
-    private static final int STEPS_COUNT = 3;
-
+    private static final int STEPS_COUNT = 2;
 
     private static final int ITEMS_STEP = 0;
 
     private static final int RECEIPT_STEP = 1;
-
-    private static final int FINISH_STEP = 2;
 
 
     private LinearLayout dotsLayout;
@@ -40,6 +38,8 @@ public class CatalogCartFragment
     private HeightWrappingViewPager viewPager;
 
     private Button previewButton, nextButton;
+
+    private CatalogCartFragmentListener fragmentListener;
 
 
     public static CatalogCartFragment newInstance() {
@@ -179,11 +179,6 @@ public class CatalogCartFragment
                 selectedDot = 1;
                 break;
 
-            case FINISH_STEP:
-
-                selectedDot = 2;
-                break;
-
             default:
 
                 selectedDot = currentPage;
@@ -201,9 +196,21 @@ public class CatalogCartFragment
 
         switch (v.getId()){
 
+
+
             case R.id.activity_catalog_cart_next_button:
 
-                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                if (viewPager.getCurrentItem() == (viewPager.getChildCount()-1)) {
+
+                    dismiss();
+
+                    fragmentListener.onFinalizeSale();
+
+                } else {
+
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+
+                }
 
                 break;
 
@@ -214,6 +221,35 @@ public class CatalogCartFragment
                 break;
 
         }
+
+    }
+
+    public void onAttach(Context context) {
+
+        super.onAttach(context);
+
+        if (context instanceof CatalogCartFragmentListener)
+
+            fragmentListener = (CatalogCartFragmentListener) context;
+
+        else
+
+            throw new RuntimeException(context.toString()
+                    + " must implement CatalogCartFragmentListener");
+
+    }
+
+    public void onDetach() {
+
+        super.onDetach();
+
+        fragmentListener = null;
+
+    }
+
+    public interface CatalogCartFragmentListener {
+
+        void onFinalizeSale();
 
     }
 

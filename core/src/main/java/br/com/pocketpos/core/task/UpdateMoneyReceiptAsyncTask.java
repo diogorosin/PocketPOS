@@ -59,7 +59,7 @@ public final class UpdateMoneyReceiptAsyncTask<C extends Context & UpdateMoneyRe
 
                 ReceiptVO moneyReceipt = new ReceiptVO();
 
-                moneyReceipt.setIdentifier(database.receiptDAO().count() + 1);
+                moneyReceipt.setIdentifier(database.receiptDAO().getCount() + 1);
 
                 moneyReceipt.setMethod("DIN");
 

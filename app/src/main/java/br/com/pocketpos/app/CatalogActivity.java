@@ -2,6 +2,7 @@ package br.com.pocketpos.app;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -10,10 +11,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.codetroopers.betterpickers.numberpicker.NumberPickerBuilder;
 import com.codetroopers.betterpickers.numberpicker.NumberPickerDialogFragment;
@@ -27,12 +30,15 @@ import br.com.pocketpos.app.repository.CatalogViewModel;
 import br.com.pocketpos.app.widget.CatalogCartFragment;
 import br.com.pocketpos.app.widget.CatalogItemFragment;
 import br.com.pocketpos.app.widget.CatalogPagerAdapter;
+import br.com.pocketpos.core.task.FinalizeSaleAsyncTask;
 import br.com.pocketpos.core.task.IncrementCatalogItemQuantityAsyncTask;
 import br.com.pocketpos.core.task.ResetCatalogItemAsyncTask;
 import br.com.pocketpos.core.task.UpdateCatalogItemAsyncTask;
+import br.com.pocketpos.core.util.Constants;
 import br.com.pocketpos.data.room.CatalogItemModel;
 import br.com.pocketpos.data.room.CatalogModel;
 import br.com.pocketpos.data.room.MeasureUnitGroup;
+import br.com.pocketpos.data.room.SaleModel;
 import br.com.pocketpos.data.util.Messaging;
 
 public class CatalogActivity extends AppCompatActivity
@@ -40,7 +46,9 @@ public class CatalogActivity extends AppCompatActivity
         CatalogItemFragment.CatalogItemFragmentListener,
         UpdateCatalogItemAsyncTask.Listener,
         IncrementCatalogItemQuantityAsyncTask.Listener,
-        ResetCatalogItemAsyncTask.Listener{
+        ResetCatalogItemAsyncTask.Listener,
+        CatalogCartFragment.CatalogCartFragmentListener,
+        FinalizeSaleAsyncTask.Listener{
 
 
     private ViewPager viewPager;
@@ -138,17 +146,40 @@ public class CatalogActivity extends AppCompatActivity
 
     }
 
-
-    public void onUpdateCatalogItemFailure(Messaging messaging) {}
-
-
-    public void onResetCatalogItemFailure(Messaging messaging) {}
-
-
     public void onIncrementCatalogItemQuantity(CatalogItemModel catalogItemModel) {
 
         new IncrementCatalogItemQuantityAsyncTask<>(this).
                 execute(catalogItemModel);
+
+    }
+
+    public void onFinalizeSale() {
+
+        SharedPreferences preferences = getSharedPreferences(
+                Constants.SHARED_PREFERENCES_NAME, 0);
+
+        Integer user = preferences.getInt(Constants.USER_IDENTIFIER_PROPERTY, 0);
+
+        Integer deviceIdentifier = preferences.getInt(Constants.DEVICE_IDENTIFIER_PROPERTY, 0);
+
+        String deviceAlias = preferences.getString(Constants.DEVICE_ALIAS_PROPERTY, "");
+
+        String title = preferences.getString(Constants.COUPON_TITLE_PROPERTY, "");
+
+        String subtitle = preferences.getString(Constants.COUPON_SUBTITLE_PROPERTY, "");
+
+        String note = "PROIBIDA VENDA PARA MENORES DE 18 ANOS.";
+
+        String footer = "WWW.POCKETPOS.COM.BR";
+
+        new FinalizeSaleAsyncTask<>(this).
+                execute(user, deviceIdentifier, deviceAlias, title, subtitle, note, footer);
+
+    }
+
+    public void onFinalizeSaleSuccess(SaleModel saleModel) {
+
+        Log.d("DIOGO", "VENDA: " + saleModel.getIdentifier().toString());
 
     }
 
@@ -200,5 +231,11 @@ public class CatalogActivity extends AppCompatActivity
     }
 
     public void onIncrementCatalogItemQuantityFailure(Messaging messaging) {}
+
+    public void onFinalizeSaleFailure(Messaging messaging) {}
+
+    public void onUpdateCatalogItemFailure(Messaging messaging) {}
+
+    public void onResetCatalogItemFailure(Messaging messaging) {}
 
 }
