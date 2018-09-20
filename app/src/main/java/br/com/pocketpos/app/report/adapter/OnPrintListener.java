@@ -8,6 +8,8 @@ public interface OnPrintListener {
 
     void onPrintPreExecute(ReportName report);
 
+    void onPrintProgressInitialize(ReportName report, int progress, int max);
+
     void onPrintProgressUpdate(ReportName report, int status);
 
     void onPrintPostExecute(ReportName report, List<Object> printed);

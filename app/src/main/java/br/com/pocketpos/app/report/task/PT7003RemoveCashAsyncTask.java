@@ -1,6 +1,7 @@
 package br.com.pocketpos.app.report.task;
 
 import android.os.AsyncTask;
+import android.os.Process;
 import android.pt.printer.Printer;
 
 import java.lang.ref.WeakReference;
@@ -65,6 +66,14 @@ public class PT7003RemoveCashAsyncTask<
 
     protected List<CashModel> doInBackground(CashModel... cashModels) {
 
+        Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
+
+        A l = this.listener.get();
+
+        if (l != null)
+
+            l.onPrintProgressInitialize(ReportName.REMOVE_CASH_COUPON, 0, 2);
+
         List<CashModel> result = new ArrayList();
 
         printer.open();
@@ -84,6 +93,12 @@ public class PT7003RemoveCashAsyncTask<
         firstWay.setValue(cashModels[0].getValue());
 
         firstWay.print();
+
+        l = this.listener.get();
+
+        if (l != null)
+
+            l.onPrintProgressUpdate(ReportName.REMOVE_CASH_COUPON, 1);
 
         printer.printString("--------------------------------");
 
@@ -105,11 +120,11 @@ public class PT7003RemoveCashAsyncTask<
 
         secondWay.print();
 
-        A l = this.listener.get();
+        l = this.listener.get();
 
         if (l != null)
 
-            l.onPrintProgressUpdate(ReportName.REMOVE_CASH_COUPON, 1);
+            l.onPrintProgressUpdate(ReportName.REMOVE_CASH_COUPON, 2);
 
         result.add(cashModels[0]);
 

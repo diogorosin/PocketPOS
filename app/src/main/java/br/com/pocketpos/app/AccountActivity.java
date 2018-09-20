@@ -1389,6 +1389,10 @@ public class AccountActivity extends AppCompatActivity implements
 
         editor.putInt(Constants.USER_IDENTIFIER_PROPERTY, userVO.getIdentifier());
 
+        editor.putString(Constants.USER_NAME_PROPERTY, userVO.getName());
+
+        editor.putString(Constants.USER_LOGIN_PROPERTY, userVO.getLogin());
+
         editor.apply();
 
         Intent intent = new Intent(AccountActivity.this, MainActivity.class);

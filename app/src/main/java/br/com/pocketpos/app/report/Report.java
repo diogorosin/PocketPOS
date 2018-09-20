@@ -6,8 +6,22 @@ import java.util.List;
 import br.com.pocketpos.app.report.adapter.OnPrintListener;
 import br.com.pocketpos.app.report.task.PT7003OpenCashAsyncTask;
 import br.com.pocketpos.data.room.CashModel;
+import br.com.pocketpos.data.room.SaleItemTicketModel;
 
 public interface Report {
+
+
+    void printSaleItemCoupon(
+            OnPrintListener listener,
+            String title,
+            String subtitle,
+            Date dateTime,
+            String deviceAlias,
+            String userName,
+            String note,
+            String footer,
+            SaleItemTicketModel... saleItemTicketModels);
+
 
     void printOpenCashCoupon(
             OnPrintListener listener,

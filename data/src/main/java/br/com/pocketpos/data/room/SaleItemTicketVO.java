@@ -3,10 +3,7 @@ package br.com.pocketpos.data.room;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
-
-import java.util.Date;
 
 @Entity(tableName = "SaleItemTicket",
         primaryKeys = {"sale", "item", "ticket"},
@@ -35,26 +32,6 @@ public class SaleItemTicketVO {
     private Integer of;
 
     @NonNull
-    @ColumnInfo(name = "title")
-    private String title;
-
-    @ColumnInfo(name = "subtitle")
-    private String subtitle;
-
-    @NonNull
-    @ColumnInfo(name = "deviceAlias")
-    private String deviceAlias;
-
-    @NonNull
-    @ColumnInfo(name = "deviceIdentifier")
-    private Integer deviceIdentifier;
-
-    @NonNull
-    @ColumnInfo(name="dateTime")
-    @TypeConverters({TimestampConverter.class})
-    private Date dateTime;
-
-    @NonNull
     @ColumnInfo(name = "denomination")
     private String denomination;
 
@@ -63,12 +40,6 @@ public class SaleItemTicketVO {
 
     @ColumnInfo(name = "measureUnit")
     private Integer measureUnit;
-
-    @ColumnInfo(name = "note")
-    private String note;
-
-    @ColumnInfo(name = "footer")
-    private String footer;
 
     @NonNull
     @ColumnInfo(name="printed")
@@ -122,66 +93,6 @@ public class SaleItemTicketVO {
 
     }
 
-    public String getTitle() {
-
-        return title;
-
-    }
-
-    public void setTitle(String title) {
-
-        this.title = title;
-
-    }
-
-    public String getSubtitle() {
-
-        return subtitle;
-
-    }
-
-    public void setSubtitle(String subtitle) {
-
-        this.subtitle = subtitle;
-
-    }
-
-    public String getDeviceAlias() {
-
-        return deviceAlias;
-
-    }
-
-    public void setDeviceAlias(String deviceAlias) {
-
-        this.deviceAlias = deviceAlias;
-
-    }
-
-    public Integer getDeviceIdentifier() {
-
-        return deviceIdentifier;
-
-    }
-
-    public void setDeviceIdentifier(Integer deviceIdentifier) {
-
-        this.deviceIdentifier = deviceIdentifier;
-
-    }
-
-    public Date getDateTime() {
-
-        return dateTime;
-
-    }
-
-    public void setDateTime(@NonNull Date dateTime) {
-
-        this.dateTime = dateTime;
-
-    }
-
     public String getDenomination() {
 
         return denomination;
@@ -215,30 +126,6 @@ public class SaleItemTicketVO {
     public void setMeasureUnit(Integer measureUnit) {
 
         this.measureUnit = measureUnit;
-
-    }
-
-    public String getNote() {
-
-        return note;
-
-    }
-
-    public void setNote(String note) {
-
-        this.note = note;
-
-    }
-
-    public String getFooter() {
-
-        return footer;
-
-    }
-
-    public void setFooter(String footer) {
-
-        this.footer = footer;
 
     }
 

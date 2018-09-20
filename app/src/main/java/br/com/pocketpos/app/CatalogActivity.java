@@ -1,5 +1,6 @@
 package br.com.pocketpos.app;
 
+import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
@@ -23,9 +24,15 @@ import com.codetroopers.betterpickers.numberpicker.NumberPickerDialogFragment;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import br.com.pocketpos.R;
+import br.com.pocketpos.app.report.Report;
+import br.com.pocketpos.app.report.ReportName;
+import br.com.pocketpos.app.report.adapter.OnPrintListener;
 import br.com.pocketpos.app.repository.CatalogViewModel;
 import br.com.pocketpos.app.widget.CatalogCartFragment;
 import br.com.pocketpos.app.widget.CatalogItemFragment;
@@ -38,6 +45,8 @@ import br.com.pocketpos.core.util.Constants;
 import br.com.pocketpos.data.room.CatalogItemModel;
 import br.com.pocketpos.data.room.CatalogModel;
 import br.com.pocketpos.data.room.MeasureUnitGroup;
+import br.com.pocketpos.data.room.SaleItemModel;
+import br.com.pocketpos.data.room.SaleItemTicketModel;
 import br.com.pocketpos.data.room.SaleModel;
 import br.com.pocketpos.data.util.Messaging;
 
@@ -48,7 +57,7 @@ public class CatalogActivity extends AppCompatActivity
         IncrementCatalogItemQuantityAsyncTask.Listener,
         ResetCatalogItemAsyncTask.Listener,
         CatalogCartFragment.CatalogCartFragmentListener,
-        FinalizeSaleAsyncTask.Listener{
+        FinalizeSaleAsyncTask.Listener, OnPrintListener {
 
 
     private ViewPager viewPager;
@@ -59,6 +68,10 @@ public class CatalogActivity extends AppCompatActivity
 
     private FloatingActionButton floatingActionButton;
 
+    private SharedPreferences preferences;
+
+    private ProgressDialog progressDialog;
+
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -66,6 +79,12 @@ public class CatalogActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_catalog);
+
+        preferences = getSharedPreferences(
+                Constants.SHARED_PREFERENCES_NAME, 0);
+
+
+        progressDialog = new ProgressDialog(this);
 
 
         Window window = getWindow();
@@ -160,26 +179,58 @@ public class CatalogActivity extends AppCompatActivity
 
         Integer user = preferences.getInt(Constants.USER_IDENTIFIER_PROPERTY, 0);
 
-        Integer deviceIdentifier = preferences.getInt(Constants.DEVICE_IDENTIFIER_PROPERTY, 0);
-
-        String deviceAlias = preferences.getString(Constants.DEVICE_ALIAS_PROPERTY, "");
-
-        String title = preferences.getString(Constants.COUPON_TITLE_PROPERTY, "");
-
-        String subtitle = preferences.getString(Constants.COUPON_SUBTITLE_PROPERTY, "");
-
-        String note = "PROIBIDA VENDA PARA MENORES DE 18 ANOS.";
-
-        String footer = "WWW.POCKETPOS.COM.BR";
-
-        new FinalizeSaleAsyncTask<>(this).
-                execute(user, deviceIdentifier, deviceAlias, title, subtitle, note, footer);
+        new FinalizeSaleAsyncTask<>(this).execute(user);
 
     }
 
     public void onFinalizeSaleSuccess(SaleModel saleModel) {
 
-        Log.d("DIOGO", "VENDA: " + saleModel.getIdentifier().toString());
+        List<SaleItemTicketModel> ticketList = new ArrayList<>();
+
+        for (SaleItemModel saleItemModel: saleModel.getItems())
+
+            ticketList.addAll(saleItemModel.getTickets());
+
+        SaleItemTicketModel[] ticketArray = new SaleItemTicketModel[ticketList.size()];
+
+        ticketArray = ticketList.toArray(ticketArray);
+
+        String title = preferences.getString(Constants.COUPON_TITLE_PROPERTY,"");
+
+        String subtitle = preferences.getString(Constants.COUPON_SUBTITLE_PROPERTY,"");
+
+        Date dateTime = saleModel.getDateTime();
+
+        String deviceAlias = preferences.getString(Constants.DEVICE_ALIAS_PROPERTY,"");
+
+        String userName = preferences.getString(Constants.USER_NAME_PROPERTY, "");
+
+        String note = "PROIBIDA A VENDA E ENTREGA DE BEBIDAS ALCOOLICAS PARA MENORES DE 18 ANOS.";
+
+        String footer = "WWW.POCKETPOS.COM.BR";
+
+        try {
+
+            Report report = (Report) Class.
+                    forName("br.com.pocketpos.app.report.PT7003Report").
+                    newInstance();
+
+            report.printSaleItemCoupon(
+                    this,
+                    title,
+                    subtitle,
+                    dateTime,
+                    deviceAlias,
+                    userName,
+                    note,
+                    footer,
+                    ticketArray);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
 
     }
 
@@ -237,5 +288,56 @@ public class CatalogActivity extends AppCompatActivity
     public void onUpdateCatalogItemFailure(Messaging messaging) {}
 
     public void onResetCatalogItemFailure(Messaging messaging) {}
+
+    //PRINTER LISTNER
+    public void onPrintPreExecute(ReportName report) {
+
+        progressDialog.setCancelable(false);
+
+        progressDialog.setTitle("Aguarde");
+
+        progressDialog.setMessage("Imprimindo cupons...");
+
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+
+        progressDialog.show();
+
+    }
+
+    public void onPrintProgressInitialize(ReportName report, int progress, int max) {
+
+        progressDialog.setProgress(progress);
+
+        progressDialog.setMax(max);
+
+    }
+
+    public void onPrintProgressUpdate(ReportName report, int status) {
+
+        progressDialog.incrementProgressBy(status);
+
+    }
+
+    public void onPrintPostExecute(ReportName report, List<Object> printed) {
+
+        progressDialog.hide();
+
+        switch (report){
+
+            case SALE_ITEM_COUPON:
+
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.success_sale_finished), Toast.LENGTH_SHORT).show();
+
+                break;
+
+        }
+
+    }
+
+    public void onPrintCancelled(ReportName report) {
+
+        progressDialog.hide();
+
+    }
 
 }

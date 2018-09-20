@@ -505,10 +505,6 @@ public class CashActivity extends AppCompatActivity implements
 
     public void onPrintPreExecute(ReportName report) {
 
-        progressDialog.setMax(1);
-
-        progressDialog.setProgress(0);
-
         progressDialog.setCancelable(false);
 
         progressDialog.setTitle("Aguarde");
@@ -521,6 +517,13 @@ public class CashActivity extends AppCompatActivity implements
 
     }
 
+    public void onPrintProgressInitialize(ReportName report, int progress, int max) {
+
+        progressDialog.setProgress(progress);
+
+        progressDialog.setMax(max);
+
+    }
 
     public void onPrintPostExecute(ReportName report, List<Object> printed) {
 

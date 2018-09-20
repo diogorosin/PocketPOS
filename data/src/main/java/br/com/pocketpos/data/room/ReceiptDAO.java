@@ -18,7 +18,15 @@ public interface ReceiptDAO {
             "RM.denomination as 'method_denomination' " +
             "FROM Receipt R " +
             "INNER JOIN ReceiptMethod RM ON RM.identifier = R.method " +
-            "ORDER BY R.identifier"; 
+            "ORDER BY R.identifier";
+
+    String AMOUNT_RECEIVED =
+            "SELECT IFNULL(SUM(R.value), 0) " +
+            "FROM Receipt R ";
+
+    String AMOUNT_TORECEIVE =
+            "SELECT (SELECT IFNULL(SUM(CI.total), 0) " +
+            "FROM CatalogItem CI) - (SELECT IFNULL(SUM(R.value),0) FROM Receipt R)";
 
     @Insert
     void create(ReceiptVO receipt);
@@ -47,15 +55,19 @@ public interface ReceiptDAO {
     @Query(LIST_QUERY)
     List<ReceiptModel> getList();
 
+    @Query(AMOUNT_RECEIVED)
+    Double getAmountReceived();
+
+    @Query(AMOUNT_TORECEIVE)
+    Double getAmountToReceive();
+
     @Query(LIST_QUERY)
     LiveData<List<ReceiptModel>> getListLiveData();
 
-    @Query("SELECT IFNULL(SUM(R.value), 0) " +
-            "FROM Receipt R ")
+    @Query(AMOUNT_RECEIVED)
     LiveData<Double> getAmountReceivedLiveData();
 
-    @Query("SELECT (SELECT IFNULL(SUM(CI.total), 0) " +
-            "FROM CatalogItem CI) - (SELECT IFNULL(SUM(R.value),0) FROM Receipt R) ")
+    @Query(AMOUNT_TORECEIVE)
     LiveData<Double> getAmountToReceiveLiveData();
 
 }

@@ -75,6 +75,7 @@
     <string name="error_invalid_company_fancyname">Nome fantasia informado é inválido.</string>
     <string name="error_password_does_not_match">As senhas não coincidem.</string>
     <string name="error_field_required">O preenchimento desse campo é obrigatório.</string>
+    <string name="success_sale_finished">Venda finalizada.</string>
     <string name="success_cash_closed">Caixa fechado.</string>
     <string name="success_cash_opened">Caixa aberto.</string>
     <string name="success_cash_supplied">Caixa complementado.</string>

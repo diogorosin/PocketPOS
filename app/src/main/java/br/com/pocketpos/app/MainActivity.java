@@ -51,11 +51,9 @@ public class MainActivity
 
         TextView userLoginTextView = navigationView.getHeaderView(0).findViewById(R.id.activity_main_navigator_header_login);
 
-        UserVO userVO = DB.getInstance(getBaseContext()).userDAO().retrieve(preferences.getInt(Constants.USER_IDENTIFIER_PROPERTY,0));
+        userNameTextView.setText(preferences.getString(Constants.USER_NAME_PROPERTY,"Anônimo"));
 
-        userNameTextView.setText(userVO.getName());
-
-        userLoginTextView.setText(userVO.getLogin());
+        userLoginTextView.setText(preferences.getString(Constants.USER_LOGIN_PROPERTY,""));
 
     }
 
@@ -115,6 +113,10 @@ public class MainActivity
                 SharedPreferences.Editor editor = preferences.edit();
 
                 editor.remove(Constants.USER_IDENTIFIER_PROPERTY);
+
+                editor.remove(Constants.USER_NAME_PROPERTY);
+
+                editor.remove(Constants.USER_LOGIN_PROPERTY);
 
                 editor.apply();
 
