@@ -1,7 +1,5 @@
 package br.com.pocketpos.app.report.layout;
 
-import java.util.Date;
-
 public abstract class SaleItemTicketHeaderLayout implements Layout {
 
     private String title;

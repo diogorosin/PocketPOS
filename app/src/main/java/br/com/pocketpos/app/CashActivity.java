@@ -525,7 +525,7 @@ public class CashActivity extends AppCompatActivity implements
 
     }
 
-    public void onPrintPostExecute(ReportName report, List<Object> printed) {
+    public void onPrintSuccess(ReportName report) {
 
         progressDialog.hide();
 
@@ -558,6 +558,9 @@ public class CashActivity extends AppCompatActivity implements
         }
 
     }
+
+
+    public void onPrintFailure(ReportName report, Messaging message) {}
 
 
     public void onPrintCancelled(ReportName report) {

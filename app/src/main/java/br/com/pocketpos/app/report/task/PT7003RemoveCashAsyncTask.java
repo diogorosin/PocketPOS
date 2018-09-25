@@ -143,7 +143,7 @@ public class PT7003RemoveCashAsyncTask<
 
             return;
 
-        l.onPrintPostExecute(ReportName.REMOVE_CASH_COUPON, callResult);
+        l.onPrintSuccess(ReportName.REMOVE_CASH_COUPON);
 
     }
 

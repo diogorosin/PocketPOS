@@ -1,5 +1,8 @@
 package br.com.pocketpos.app.report;
 
+import android.app.Activity;
+import android.content.Context;
+
 import java.util.Date;
 
 import br.com.pocketpos.app.report.adapter.OnPrintListener;
@@ -23,6 +26,7 @@ public class PT7003Report implements Report {
             String userName,
             String note,
             String footer,
+            Context context,
             SaleItemTicketModel... saleItemTicketModels) {
 
         new PT7003PrintSaleItemTicketAsyncTask<>(
@@ -33,7 +37,8 @@ public class PT7003Report implements Report {
                 deviceAlias,
                 userName,
                 note,
-                footer).execute(saleItemTicketModels);
+                footer,
+                context).execute(saleItemTicketModels);
 
     }
 

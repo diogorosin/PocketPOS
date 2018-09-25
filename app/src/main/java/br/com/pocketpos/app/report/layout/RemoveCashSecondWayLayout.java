@@ -5,26 +5,12 @@ import java.util.Date;
 public abstract class RemoveCashSecondWayLayout implements Layout {
 
 
-    private String reportName;
-
     private String userName;
 
     private Date dateTime;
 
     private Double value;
 
-
-    public String getReportName() {
-
-        return reportName;
-
-    }
-
-    public void setReportName(String reportName) {
-
-        this.reportName = reportName;
-
-    }
 
     public String getUserName() {
 

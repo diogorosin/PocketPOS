@@ -120,7 +120,7 @@ public class PT7003OpenCashAsyncTask<
 
             return;
 
-        l.onPrintPostExecute(ReportName.OPEN_CASH_COUPON, callResult);
+        l.onPrintSuccess(ReportName.OPEN_CASH_COUPON);
 
     }
 

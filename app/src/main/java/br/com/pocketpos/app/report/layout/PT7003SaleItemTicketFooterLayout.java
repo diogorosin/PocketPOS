@@ -1,18 +1,26 @@
 package br.com.pocketpos.app.report.layout;
 
-import android.pt.printer.Printer;
+import br.com.pocketpos.app.report.exception.FailPrinterException;
+import br.com.pocketpos.app.report.exception.InParametersErrorPrinterException;
+import br.com.pocketpos.app.report.exception.NoPaperPrinterException;
+import br.com.pocketpos.app.report.exception.TimeoutPrinterException;
+import br.com.pocketpos.app.report.util.PT7003Printer;
 
 public class PT7003SaleItemTicketFooterLayout extends SaleItemTicketFooterLayout {
 
-    private final Printer printer;
+    private final PT7003Printer printer;
 
-    public PT7003SaleItemTicketFooterLayout(Printer printer){
+    public PT7003SaleItemTicketFooterLayout(PT7003Printer printer){
 
         this.printer = printer;
 
     }
 
-    public void print(){
+    public void print() throws
+            TimeoutPrinterException,
+            InParametersErrorPrinterException,
+            FailPrinterException,
+            NoPaperPrinterException {
 
         printer.setFontSize(1);
 

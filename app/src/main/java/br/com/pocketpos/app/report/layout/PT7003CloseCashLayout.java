@@ -31,7 +31,7 @@ public class PT7003CloseCashLayout extends CloseCashLayout {
 
         printer.printString("OPERACAO------------------------");
 
-        printer.printString("  DATA/HORA-- PAG VALOR---------");
+        printer.printString("  DATA/HORA-- VALOR-------------");
 
         printer.printString("  USUARIO-----------------------");
 
@@ -49,15 +49,17 @@ public class PT7003CloseCashLayout extends CloseCashLayout {
 
             }
 
-            row.print();
+            try {
+                row.print();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
 
         printer.printString("--------------------------------");
 
         printer.printString("              DIN           0,00");
-
-        printer.printString("              CAR           0,00");
 
         printer.printString(" ");
 

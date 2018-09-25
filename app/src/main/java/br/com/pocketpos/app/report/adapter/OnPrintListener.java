@@ -1,8 +1,7 @@
 package br.com.pocketpos.app.report.adapter;
 
-import java.util.List;
-
 import br.com.pocketpos.app.report.ReportName;
+import br.com.pocketpos.data.util.Messaging;
 
 public interface OnPrintListener {
 
@@ -12,7 +11,9 @@ public interface OnPrintListener {
 
     void onPrintProgressUpdate(ReportName report, int status);
 
-    void onPrintPostExecute(ReportName report, List<Object> printed);
+    void onPrintSuccess(ReportName report);
+
+    void onPrintFailure(ReportName report, Messaging message);
 
     void onPrintCancelled(ReportName report);
 

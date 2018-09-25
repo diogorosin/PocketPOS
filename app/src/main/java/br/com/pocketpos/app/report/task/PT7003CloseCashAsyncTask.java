@@ -127,7 +127,7 @@ public class PT7003CloseCashAsyncTask<
 
             return;
 
-        l.onPrintPostExecute(ReportName.CLOSE_CASH_COUPON, null);
+        l.onPrintSuccess(ReportName.CLOSE_CASH_COUPON);
 
     }
 

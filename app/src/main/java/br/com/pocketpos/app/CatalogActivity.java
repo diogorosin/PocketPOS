@@ -1,8 +1,10 @@
 package br.com.pocketpos.app;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +14,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -25,7 +27,6 @@ import com.codetroopers.betterpickers.numberpicker.NumberPickerDialogFragment;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -224,6 +225,7 @@ public class CatalogActivity extends AppCompatActivity
                     userName,
                     note,
                     footer,
+                    getBaseContext(),
                     ticketArray);
 
         } catch (Exception e) {
@@ -318,7 +320,7 @@ public class CatalogActivity extends AppCompatActivity
 
     }
 
-    public void onPrintPostExecute(ReportName report, List<Object> printed) {
+    public void onPrintSuccess(ReportName report) {
 
         progressDialog.hide();
 
@@ -334,9 +336,41 @@ public class CatalogActivity extends AppCompatActivity
 
     }
 
+    public void onPrintFailure(ReportName report, Messaging message) {
+
+        progressDialog.hide();
+
+        showPrinterAlertDialog(message, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+
+
+
+            }
+
+        });
+
+    }
+
     public void onPrintCancelled(ReportName report) {
 
         progressDialog.hide();
+
+    }
+
+    public void showPrinterAlertDialog(Messaging messaging, DialogInterface.OnClickListener listener){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(TextUtils.join("\n", messaging.getMessages()));
+
+        builder.setTitle(R.string.dlg_title_print_failure);
+
+        builder.setPositiveButton(R.string.try_again, listener);
+
+        AlertDialog alert = builder.create();
+
+        alert.show();
 
     }
 

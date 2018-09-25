@@ -24,6 +24,11 @@ public interface SaleItemTicketDAO {
             "WHERE SIT.sale = :sale AND SIT.item = :item AND SIT.ticket = :ticket")
     Boolean exists(int sale, int item, int ticket);
 
+    @Query("UPDATE SaleItemTicket " +
+            "SET printed = 1 " +
+            "WHERE sale = :sale AND item = :item AND ticket = :ticket")
+    void setPrinted(int sale, int item, int ticket);
+
     @Update
     void update(SaleItemTicketVO saleItemTicketVO);
 

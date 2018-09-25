@@ -15,8 +15,6 @@ import android.widget.TextView;
 
 import br.com.pocketpos.R;
 import br.com.pocketpos.core.util.Constants;
-import br.com.pocketpos.data.room.UserVO;
-import br.com.pocketpos.data.util.DB;
 
 public class MainActivity
         extends AppCompatActivity

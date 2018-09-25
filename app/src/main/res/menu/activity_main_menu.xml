@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:id="@+id/gp_system" android:checkableBehavior="single">
+    <group android:id="@+id/gp_system" android:checkableBehavior="all">
         <item
             android:id="@+id/activity_main_menu_home"
             android:icon="@drawable/home_24"
@@ -8,12 +8,14 @@
             android:checkable="true"
             android:checked="true">
         </item>
+
         <item
             android:id="@+id/activity_main_menu_sale"
             android:icon="@drawable/sale_24"
-            android:title="Venda"
-            android:checkable="false">
+            android:checkable="false"
+            android:title="Venda">
         </item>
+
         <item
             android:id="@+id/activity_main_menu_cash"
             android:icon="@drawable/cash_24"

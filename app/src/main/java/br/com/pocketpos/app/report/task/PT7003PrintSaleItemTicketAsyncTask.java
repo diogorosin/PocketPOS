@@ -1,35 +1,48 @@
 package br.com.pocketpos.app.report.task;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Process;
-import android.pt.printer.Printer;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import br.com.pocketpos.app.report.ReportName;
 import br.com.pocketpos.app.report.adapter.OnPrintListener;
+import br.com.pocketpos.app.report.exception.FailPrinterException;
+import br.com.pocketpos.app.report.exception.InParametersErrorPrinterException;
+import br.com.pocketpos.app.report.exception.NoPaperPrinterException;
+import br.com.pocketpos.app.report.exception.TimeoutPrinterException;
 import br.com.pocketpos.app.report.layout.PT7003SaleItemTicketFooterLayout;
 import br.com.pocketpos.app.report.layout.PT7003SaleItemTicketHeaderLayout;
 import br.com.pocketpos.app.report.layout.PT7003SaleItemTicketLayout;
+import br.com.pocketpos.app.report.util.PT7003Printer;
 import br.com.pocketpos.data.room.SaleItemTicketModel;
+import br.com.pocketpos.data.util.DB;
+import br.com.pocketpos.data.util.Messaging;
 
 public class PT7003PrintSaleItemTicketAsyncTask<
+        E extends Context,
         A extends OnPrintListener,
         B extends SaleItemTicketModel,
         C extends Integer,
-        D extends List> extends AsyncTask<B, C, D>  {
+        D extends Map> extends AsyncTask<B, C, D>  {
+
+
+    private static final int ERROR_PROPERTY = 1;
 
 
     private WeakReference<A> listener;
+
+    private WeakReference<E> context;
 
     private PT7003SaleItemTicketHeaderLayout header;
 
     private PT7003SaleItemTicketFooterLayout footer;
 
-    private Printer printer;
+    private PT7003Printer printer;
 
 
     private String userName;
@@ -46,7 +59,10 @@ public class PT7003PrintSaleItemTicketAsyncTask<
                                               String deviceAlias,
                                               String userName,
                                               String note,
-                                              String footer){
+                                              String footer,
+                                              E context){
+
+        this.listener = new WeakReference<>(listener);
 
         this.dateTime = dateTime;
 
@@ -54,9 +70,7 @@ public class PT7003PrintSaleItemTicketAsyncTask<
 
         this.userName = userName;
 
-        this.listener = new WeakReference<>(listener);
-
-        this.printer = new Printer();
+        this.printer = new PT7003Printer();
 
         this.header = new PT7003SaleItemTicketHeaderLayout(printer);
 
@@ -69,6 +83,8 @@ public class PT7003PrintSaleItemTicketAsyncTask<
         this.footer.setNote(note);
 
         this.footer.setFooter(footer);
+
+        this.context = new WeakReference<>(context);
 
     }
 
@@ -84,80 +100,124 @@ public class PT7003PrintSaleItemTicketAsyncTask<
     }
 
 
-    protected List<SaleItemTicketModel> doInBackground(SaleItemTicketModel... saleItemTicketModels) {
+    protected Map doInBackground(SaleItemTicketModel... saleItemTicketModels) {
 
         Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
 
-        A l = this.listener.get();
+        A listener = this.listener.get();
 
-        if (l != null)
+        if (listener != null) {
 
-            l.onPrintProgressInitialize(ReportName.SALE_ITEM_COUPON, 0, saleItemTicketModels.length);
+            listener.onPrintProgressInitialize(ReportName.SALE_ITEM_COUPON, 0, saleItemTicketModels.length);
 
-        List<SaleItemTicketModel> result = new ArrayList();
+            E context = this.context.get();
 
-        this.printer.open();
+            DB database = DB.getInstance(context);
 
-        this.printer.init();
+            try {
 
-        for (SaleItemTicketModel saleItemTicketModel: saleItemTicketModels){
+                this.printer.open();
 
-            this.header.print();
+                this.printer.init();
 
-            PT7003SaleItemTicketLayout body = new PT7003SaleItemTicketLayout(printer);
+                for (SaleItemTicketModel saleItemTicketModel : saleItemTicketModels) {
 
-            body.setDeviceAlias(this.deviceAlias);
+                    //CABECALHO
+                    this.header.print();
 
-            body.setSale(saleItemTicketModel.getSaleItem().getSale());
+                    //CORPO
+                    PT7003SaleItemTicketLayout body = new PT7003SaleItemTicketLayout(printer);
 
-            body.setItem(saleItemTicketModel.getSaleItem().getItem());
+                    body.setDeviceAlias(this.deviceAlias);
 
-            body.setTicket(saleItemTicketModel.getTicket());
+                    body.setSale(saleItemTicketModel.getSaleItem().getSale());
 
-            body.setOf(saleItemTicketModel.getOf());
+                    body.setItem(saleItemTicketModel.getSaleItem().getItem());
 
-            body.setUserName(this.userName);
+                    body.setTicket(saleItemTicketModel.getTicket());
 
-            body.setDateTime(this.dateTime);
+                    body.setOf(saleItemTicketModel.getOf());
 
-            body.setDenomination(saleItemTicketModel.getDenomination());
+                    body.setUserName(this.userName);
 
-            body.setQuantity(saleItemTicketModel.getQuantity());
+                    body.setDateTime(this.dateTime);
 
-            body.setMeasureUnit(saleItemTicketModel.getMeasureUnit().getAcronym());
+                    body.setDenomination(saleItemTicketModel.getDenomination());
 
-            body.print();
+                    body.setQuantity(saleItemTicketModel.getQuantity());
 
-            this.footer.print();
+                    body.setMeasureUnit(saleItemTicketModel.getMeasureUnit().getAcronym());
 
-            l = this.listener.get();
+                    body.print();
 
-            if (l != null)
+                    //SE IMPRIMIU O CORPO DO TICKET DEFINE COMO IMPRESSO.
+                    database.saleItemTicketDAO().setPrinted(
+                            saleItemTicketModel.getSaleItem().getSale(),
+                            saleItemTicketModel.getSaleItem().getItem(),
+                            saleItemTicketModel.getTicket());
 
-                l.onPrintProgressUpdate(ReportName.SALE_ITEM_COUPON, 1);
+                    //ATUALIZA O STATUS
+                    listener.onPrintProgressUpdate(ReportName.SALE_ITEM_COUPON, 1);
 
-            result.add(saleItemTicketModel);
+                    //RODAPE DO TICKET
+                    this.footer.print();
+
+                }
+
+                printer.printString(" ");
+
+                this.printer.close();
+
+            } catch (NoPaperPrinterException |
+                    FailPrinterException |
+                    InParametersErrorPrinterException |
+                    TimeoutPrinterException e) {
+
+                if (database.inTransaction())
+
+                    database.endTransaction();
+
+                Map<Integer, Object> result = new HashMap<>();
+
+                result.put(ERROR_PROPERTY, e);
+
+                return result;
+
+            }
 
         }
 
-        printer.printString(" ");
-
-        this.printer.close();
-
-        return result;
+        return new HashMap<>();
 
     }
 
 
-    protected void onPostExecute(List callResult) {
+    protected void onPostExecute(Map callResult) {
 
-        A l = this.listener.get();
+        A listener = this.listener.get();
 
-        if (l == null)
+        if (listener != null) {
 
-            return;
+            if (callResult instanceof Map) {
 
-        l.onPrintPostExecute(ReportName.SALE_ITEM_COUPON, callResult);
+                Map<Integer, Object> map = (Map<Integer, Object>) callResult;
+
+                if (map.containsKey(ERROR_PROPERTY)){
+
+                    listener.onPrintFailure(
+                            ReportName.SALE_ITEM_COUPON,
+                            (Messaging) map.get(ERROR_PROPERTY));
+
+                } else {
+
+                    listener.onPrintSuccess(
+                            ReportName.SALE_ITEM_COUPON);
+
+                }
+
+            }
+
+        }
 
     }
 

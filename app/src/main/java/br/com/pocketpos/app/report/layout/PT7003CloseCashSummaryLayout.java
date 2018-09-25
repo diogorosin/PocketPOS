@@ -20,8 +20,8 @@ public class PT7003CloseCashSummaryLayout extends CloseCashSummaryLayout {
     public void print(){
 
         printer.printString("  " +
-                StringUtils.formatShortDateTime(getDateTime()) + " " + getPayment() + " " +
-                        StringUtils.leftPad(StringUtils.formatCurrency(  getType().equals("S") ? getValue() * -1 : getValue()), 14, ' '));
+                StringUtils.formatShortDateTime(getDateTime()) + " " +
+                        StringUtils.leftPad(StringUtils.formatCurrency(  getType().equals("S") ? getValue() * -1 : getValue()), 18, ' '));
 
         printer.printString("  " +
                 StringUtils.rightPad(getUserName(), 30, ' '));

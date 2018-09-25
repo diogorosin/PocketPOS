@@ -84,6 +84,7 @@
     <!-- Dialogs         -->
     <string name="dlg_title_login_failure">Não foi possível efetuar o login:</string>
     <string name="dlg_title_request_failure">Não foi possível concluir a requisição:</string>
+    <string name="dlg_title_print_failure">Não foi possível concluir a impressão:</string>
     <string name="dlg_title_configuration_failure">Não foi possível configurar o dispositivo:</string>
     <string name="dlg_title_retrieve_device_failure">Não foi possível obter informações do dispositivo no servidor:</string>
     <string name="dlg_title_cash_open">@string/cash_open</string>

@@ -120,7 +120,7 @@ public class PT7003SupplyCashAsyncTask<
 
             return;
 
-        l.onPrintPostExecute(ReportName.SUPPLY_CASH_COUPON, callResult);
+        l.onPrintSuccess(ReportName.SUPPLY_CASH_COUPON);
 
     }
 
