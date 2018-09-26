@@ -27,12 +27,35 @@ public interface SaleItemTicketDAO {
     @Query("UPDATE SaleItemTicket " +
             "SET printed = 1 " +
             "WHERE sale = :sale AND item = :item AND ticket = :ticket")
-    void setPrinted(int sale, int item, int ticket);
+    void setTicketAsPrinted(int sale, int item, int ticket);
 
     @Update
     void update(SaleItemTicketVO saleItemTicketVO);
 
     @Delete
     void delete(SaleItemTicketVO saleItemTicketVO);
+
+    @Query("SELECT SI.sale AS 'saleitem_sale', " +
+            "SI.item AS 'saleitem_item', " +
+            "SIT.ticket, " +
+            "SIT.'of', " +
+            "SIT.denomination, " +
+            "SIT.quantity, " +
+            "MU.identifier AS 'measureunit_identifier', " +
+            "MU.denomination AS 'measureunit_denomination', " +
+            "MU.acronym AS 'measureunit_acronym', " +
+            "MU.'group' AS 'measureunit_group', " +
+            "SIT.printed " +
+            "FROM SaleItemTicket SIT " +
+            "INNER JOIN MeasureUnit MU ON MU.identifier = SIT.measureunit " +
+            "INNER JOIN SaleItem SI ON SI.sale = SIT.sale AND SI.item = SIT.item " +
+            "INNER JOIN Sale S ON S.identifier = SI.sale " +
+            "WHERE S.identifier = :sale")
+    List<SaleItemTicketModel> getTicketsOfSale(int sale);
+
+    @Query("SELECT COUNT(*) " +
+            "FROM SaleItemTicket SIT " +
+            "WHERE SIT.sale = :sale AND SIT.printed = 1")
+    Integer getPrintedTicketsCountOfSale(int sale);
 
 }

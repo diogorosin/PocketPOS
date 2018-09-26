@@ -1,7 +1,10 @@
 package br.com.pocketpos.data.room;
 
+import android.arch.persistence.room.Embedded;
+
 public class SaleItemTicketModel {
 
+    @Embedded(prefix = "saleitem_")
     private SaleItemVO saleItem;
 
     private Integer ticket;
@@ -12,6 +15,7 @@ public class SaleItemTicketModel {
 
     private Double quantity;
 
+    @Embedded(prefix = "measureunit_")
     private MeasureUnitVO measureUnit;
 
     private Boolean printed;

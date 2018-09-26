@@ -52,15 +52,9 @@ public class PT7003Printer{
 
     }
 
-    public void close() throws FailPrinterException {
+    public void close() {
 
-        switch (printer.close()){
-
-            case -1:
-
-                throw new FailPrinterException("CLOSE");
-
-        }
+        printer.close();
 
     }
 

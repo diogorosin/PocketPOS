@@ -7,6 +7,7 @@ import android.os.Process;
 import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.com.pocketpos.app.report.ReportName;
@@ -23,20 +24,16 @@ import br.com.pocketpos.data.room.SaleItemTicketModel;
 import br.com.pocketpos.data.util.DB;
 import br.com.pocketpos.data.util.Messaging;
 
-public class PT7003PrintSaleItemTicketAsyncTask<
+public class PT7003PrintTicketsOfLastGeneratedSaleAsyncTask<
         E extends Context,
         A extends OnPrintListener,
-        B extends SaleItemTicketModel,
+        B extends Void,
         C extends Integer,
         D extends Map> extends AsyncTask<B, C, D>  {
 
 
     private static final int ERROR_PROPERTY = 1;
 
-
-    private WeakReference<A> listener;
-
-    private WeakReference<E> context;
 
     private PT7003SaleItemTicketHeaderLayout header;
 
@@ -45,26 +42,27 @@ public class PT7003PrintSaleItemTicketAsyncTask<
     private PT7003Printer printer;
 
 
+    private WeakReference<E> context;
+
+    private WeakReference<A> listener;
+
     private String userName;
 
     private String deviceAlias;
 
-    private Date dateTime;
 
+    public PT7003PrintTicketsOfLastGeneratedSaleAsyncTask(E context,
+                                                          A listener,
+                                                          String title,
+                                                          String subtitle,
+                                                          String deviceAlias,
+                                                          String userName,
+                                                          String note,
+                                                          String footer){
 
-    public PT7003PrintSaleItemTicketAsyncTask(A listener,
-                                              String title,
-                                              String subtitle,
-                                              Date dateTime,
-                                              String deviceAlias,
-                                              String userName,
-                                              String note,
-                                              String footer,
-                                              E context){
+        this.context = new WeakReference<>(context);
 
         this.listener = new WeakReference<>(listener);
-
-        this.dateTime = dateTime;
 
         this.deviceAlias = deviceAlias;
 
@@ -84,8 +82,6 @@ public class PT7003PrintSaleItemTicketAsyncTask<
 
         this.footer.setFooter(footer);
 
-        this.context = new WeakReference<>(context);
-
     }
 
 
@@ -100,88 +96,105 @@ public class PT7003PrintSaleItemTicketAsyncTask<
     }
 
 
-    protected Map doInBackground(SaleItemTicketModel... saleItemTicketModels) {
+    protected Map doInBackground(Void... voids) {
 
         Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
 
-        A listener = this.listener.get();
+        E c = context.get();
 
-        if (listener != null) {
+        if (c != null) {
 
-            listener.onPrintProgressInitialize(ReportName.SALE_ITEM_COUPON, 0, saleItemTicketModels.length);
+            DB database = DB.getInstance(c);
 
-            E context = this.context.get();
+            int sale = database.saleDAO().lastGeneratedSale();
 
-            DB database = DB.getInstance(context);
+            int printedTicketsCountOfSale = database.saleItemTicketDAO().getPrintedTicketsCountOfSale(sale);
+
+            List<SaleItemTicketModel> saleItemTicketModels = database.
+                    saleItemTicketDAO().
+                    getTicketsOfSale(sale);
+
+            A l = listener.get();
+
+            if (l != null)
+
+                l.onPrintProgressInitialize(
+                        ReportName.SALE_ITEM_COUPON,
+                        printedTicketsCountOfSale,
+                        saleItemTicketModels.size());
 
             try {
 
-                this.printer.open();
+                printer.open();
 
-                this.printer.init();
+                printer.init();
 
                 for (SaleItemTicketModel saleItemTicketModel : saleItemTicketModels) {
 
-                    //CABECALHO
-                    this.header.print();
+                    if (!saleItemTicketModel.getPrinted()) {
 
-                    //CORPO
-                    PT7003SaleItemTicketLayout body = new PT7003SaleItemTicketLayout(printer);
+                        //IMPRIME O CABECALHO DO TICKET
+                        header.print();
 
-                    body.setDeviceAlias(this.deviceAlias);
+                        //IMPRIME O CORPO DO TICKET
+                        PT7003SaleItemTicketLayout body = new PT7003SaleItemTicketLayout(printer);
 
-                    body.setSale(saleItemTicketModel.getSaleItem().getSale());
+                        body.setDeviceAlias(deviceAlias);
 
-                    body.setItem(saleItemTicketModel.getSaleItem().getItem());
+                        body.setSale(saleItemTicketModel.getSaleItem().getSale());
 
-                    body.setTicket(saleItemTicketModel.getTicket());
+                        body.setItem(saleItemTicketModel.getSaleItem().getItem());
 
-                    body.setOf(saleItemTicketModel.getOf());
+                        body.setTicket(saleItemTicketModel.getTicket());
 
-                    body.setUserName(this.userName);
+                        body.setOf(saleItemTicketModel.getOf());
 
-                    body.setDateTime(this.dateTime);
+                        body.setUserName(userName);
 
-                    body.setDenomination(saleItemTicketModel.getDenomination());
+                        body.setDateTime(new Date());
 
-                    body.setQuantity(saleItemTicketModel.getQuantity());
+                        body.setDenomination(saleItemTicketModel.getDenomination());
 
-                    body.setMeasureUnit(saleItemTicketModel.getMeasureUnit().getAcronym());
+                        body.setQuantity(saleItemTicketModel.getQuantity());
 
-                    body.print();
+                        body.setMeasureUnit(saleItemTicketModel.getMeasureUnit().getAcronym());
 
-                    //SE IMPRIMIU O CORPO DO TICKET DEFINE COMO IMPRESSO.
-                    database.saleItemTicketDAO().setPrinted(
-                            saleItemTicketModel.getSaleItem().getSale(),
-                            saleItemTicketModel.getSaleItem().getItem(),
-                            saleItemTicketModel.getTicket());
+                        body.print();
 
-                    //ATUALIZA O STATUS
-                    listener.onPrintProgressUpdate(ReportName.SALE_ITEM_COUPON, 1);
+                        //IMPRIME O RODAPE DO TICKET
+                        footer.print();
 
-                    //RODAPE DO TICKET
-                    this.footer.print();
+                        //DEFINE O TICKET COMO IMPRESSO.
+                        database.saleItemTicketDAO().setTicketAsPrinted(
+                                saleItemTicketModel.getSaleItem().getSale(),
+                                saleItemTicketModel.getSaleItem().getItem(),
+                                saleItemTicketModel.getTicket());
+
+                        //ATUALIZA O STATUS
+                        if (l != null)
+
+                            l.onPrintProgressUpdate(ReportName.SALE_ITEM_COUPON, 1);
+
+                    }
 
                 }
 
                 printer.printString(" ");
-
-                this.printer.close();
 
             } catch (NoPaperPrinterException |
                     FailPrinterException |
                     InParametersErrorPrinterException |
                     TimeoutPrinterException e) {
 
-                if (database.inTransaction())
-
-                    database.endTransaction();
-
                 Map<Integer, Object> result = new HashMap<>();
 
                 result.put(ERROR_PROPERTY, e);
 
                 return result;
+
+            } finally {
+
+                printer.close();
 
             }
 

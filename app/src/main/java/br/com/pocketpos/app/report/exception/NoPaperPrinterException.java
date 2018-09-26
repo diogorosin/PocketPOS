@@ -6,7 +6,7 @@ public class NoPaperPrinterException extends Exception implements Messaging {
 
     public NoPaperPrinterException(){
 
-        super("Impressora sem papel.");
+        super("<b>A impressora está sem papel</b>. Descarte o último cupom impresso pela metade, subistitua a bobina e tente novamente.");
 
     }
 

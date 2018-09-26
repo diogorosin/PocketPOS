@@ -14,6 +14,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,8 +27,6 @@ import com.codetroopers.betterpickers.numberpicker.NumberPickerDialogFragment;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import br.com.pocketpos.R;
@@ -46,9 +45,6 @@ import br.com.pocketpos.core.util.Constants;
 import br.com.pocketpos.data.room.CatalogItemModel;
 import br.com.pocketpos.data.room.CatalogModel;
 import br.com.pocketpos.data.room.MeasureUnitGroup;
-import br.com.pocketpos.data.room.SaleItemModel;
-import br.com.pocketpos.data.room.SaleItemTicketModel;
-import br.com.pocketpos.data.room.SaleModel;
 import br.com.pocketpos.data.util.Messaging;
 
 public class CatalogActivity extends AppCompatActivity
@@ -184,55 +180,9 @@ public class CatalogActivity extends AppCompatActivity
 
     }
 
-    public void onFinalizeSaleSuccess(SaleModel saleModel) {
+    public void onFinalizeSaleSuccess(Integer sale) {
 
-        List<SaleItemTicketModel> ticketList = new ArrayList<>();
-
-        for (SaleItemModel saleItemModel: saleModel.getItems())
-
-            ticketList.addAll(saleItemModel.getTickets());
-
-        SaleItemTicketModel[] ticketArray = new SaleItemTicketModel[ticketList.size()];
-
-        ticketArray = ticketList.toArray(ticketArray);
-
-        String title = preferences.getString(Constants.COUPON_TITLE_PROPERTY,"");
-
-        String subtitle = preferences.getString(Constants.COUPON_SUBTITLE_PROPERTY,"");
-
-        Date dateTime = saleModel.getDateTime();
-
-        String deviceAlias = preferences.getString(Constants.DEVICE_ALIAS_PROPERTY,"");
-
-        String userName = preferences.getString(Constants.USER_NAME_PROPERTY, "");
-
-        String note = "PROIBIDA A VENDA E ENTREGA DE BEBIDAS ALCOOLICAS PARA MENORES DE 18 ANOS.";
-
-        String footer = "WWW.POCKETPOS.COM.BR";
-
-        try {
-
-            Report report = (Report) Class.
-                    forName("br.com.pocketpos.app.report.PT7003Report").
-                    newInstance();
-
-            report.printSaleItemCoupon(
-                    this,
-                    title,
-                    subtitle,
-                    dateTime,
-                    deviceAlias,
-                    userName,
-                    note,
-                    footer,
-                    getBaseContext(),
-                    ticketArray);
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        }
+        printTicketsOfLastGeneratedSale();
 
     }
 
@@ -344,7 +294,7 @@ public class CatalogActivity extends AppCompatActivity
 
             public void onClick(DialogInterface dialog, int which) {
 
-
+                printTicketsOfLastGeneratedSale();
 
             }
 
@@ -362,7 +312,9 @@ public class CatalogActivity extends AppCompatActivity
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setMessage(TextUtils.join("\n", messaging.getMessages()));
+        builder.setMessage(  Html.fromHtml(    TextUtils.join("\n", messaging.getMessages())  ) );
+
+        builder.setCancelable(false);
 
         builder.setTitle(R.string.dlg_title_print_failure);
 
@@ -370,7 +322,47 @@ public class CatalogActivity extends AppCompatActivity
 
         AlertDialog alert = builder.create();
 
+        alert.setCanceledOnTouchOutside(false);
+
         alert.show();
+
+    }
+
+    public void printTicketsOfLastGeneratedSale(){
+
+        String title = preferences.getString(Constants.COUPON_TITLE_PROPERTY,"");
+
+        String subtitle = preferences.getString(Constants.COUPON_SUBTITLE_PROPERTY,"");
+
+        String deviceAlias = preferences.getString(Constants.DEVICE_ALIAS_PROPERTY,"");
+
+        String userName = preferences.getString(Constants.USER_NAME_PROPERTY, "");
+
+        String note = "PROIBIDA A VENDA E ENTREGA DE BEBIDAS ALCOOLICAS PARA MENORES DE 18 ANOS.";
+
+        String footer = "WWW.POCKETPOS.COM.BR";
+
+        try {
+
+            Report report = (Report) Class.
+                    forName("br.com.pocketpos.app.report.PT7003Report").
+                    newInstance();
+
+            report.printCouponsOfLastGeneratedSale(
+                    getBaseContext(),
+                    this,
+                    title,
+                    subtitle,
+                    deviceAlias,
+                    userName,
+                    note,
+                    footer);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
 
     }
 

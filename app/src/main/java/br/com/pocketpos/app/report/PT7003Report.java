@@ -1,6 +1,5 @@
 package br.com.pocketpos.app.report;
 
-import android.app.Activity;
 import android.content.Context;
 
 import java.util.Date;
@@ -8,37 +7,32 @@ import java.util.Date;
 import br.com.pocketpos.app.report.adapter.OnPrintListener;
 import br.com.pocketpos.app.report.task.PT7003CloseCashAsyncTask;
 import br.com.pocketpos.app.report.task.PT7003OpenCashAsyncTask;
-import br.com.pocketpos.app.report.task.PT7003PrintSaleItemTicketAsyncTask;
+import br.com.pocketpos.app.report.task.PT7003PrintTicketsOfLastGeneratedSaleAsyncTask;
 import br.com.pocketpos.app.report.task.PT7003RemoveCashAsyncTask;
 import br.com.pocketpos.app.report.task.PT7003SupplyCashAsyncTask;
 import br.com.pocketpos.data.room.CashModel;
-import br.com.pocketpos.data.room.SaleItemTicketModel;
 
 public class PT7003Report implements Report {
 
     /* CUPOM DO ITEM DA VENDA */
-    public void printSaleItemCoupon(
-            OnPrintListener listener,
-            String title,
-            String subtitle,
-            Date dateTime,
-            String deviceAlias,
-            String userName,
-            String note,
-            String footer,
-            Context context,
-            SaleItemTicketModel... saleItemTicketModels) {
+    public void printCouponsOfLastGeneratedSale(Context context,
+                                                OnPrintListener listener,
+                                                String title,
+                                                String subtitle,
+                                                String deviceAlias,
+                                                String userName,
+                                                String note,
+                                                String footer) {
 
-        new PT7003PrintSaleItemTicketAsyncTask<>(
+        new PT7003PrintTicketsOfLastGeneratedSaleAsyncTask<>(
+                context,
                 listener,
                 title,
                 subtitle,
-                dateTime,
                 deviceAlias,
                 userName,
                 note,
-                footer,
-                context).execute(saleItemTicketModels);
+                footer).execute();
 
     }
 
