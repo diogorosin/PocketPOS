@@ -26,7 +26,15 @@ public interface ProductProductDAO {
     @Delete
     void delete(ProductProductVO productProductVO);
 
-    @Query("SELECT * FROM ProductProduct WHERE productIdentifier = :product")
-    List<ProductProductVO> listByProduct(int product);
+    @Query("SELECT PR.identifier AS 'product_identifier'," +
+            "PR.denomination AS 'product_denomination'," +
+            "PA.identifier AS 'part_identifier'," +
+            "PA.denomination AS 'part_identifier'," +
+            "PP.quantity " +
+            "FROM ProductProduct PP " +
+            "INNER JOIN Product PR ON PR.identifier = PP.productIdentifier " +
+            "INNER JOIN Product PA ON PA.identifier = PP.partIdentifier " +
+            "WHERE PR.identifier = :product AND PP.active = 1")
+    List<ProductProductModel> getCompositionOfProduct(int product);
 
 }

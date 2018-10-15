@@ -8,8 +8,6 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import br.com.pocketpos.data.room.ProductVO;
-
 @Dao
 public interface ProductDAO {
 
@@ -18,6 +16,11 @@ public interface ProductDAO {
 
     @Query("SELECT * FROM Product WHERE identifier = :identifier")
     ProductVO retrieve(int identifier);
+
+    @Query("SELECT COUNT(*) > 0 " +
+            "FROM ProductProduct PP " +
+            "WHERE PP.productIdentifier = :product AND PP.active = 1")
+    Boolean isComposed(int product);
 
     @Query("SELECT COUNT(*) > 0 FROM Product WHERE identifier = :identifier")
     Boolean exists(int identifier);

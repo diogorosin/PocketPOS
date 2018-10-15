@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import br.com.pocketpos.data.exception.CannotInitializeDatabaseException;
 import br.com.pocketpos.data.exception.InternalException;
 import br.com.pocketpos.data.room.CashVO;
 import br.com.pocketpos.data.room.CatalogItemModel;
 import br.com.pocketpos.data.room.MeasureUnitGroup;
+import br.com.pocketpos.data.room.ProductModel;
+import br.com.pocketpos.data.room.ProductProductModel;
 import br.com.pocketpos.data.room.ReceiptModel;
 import br.com.pocketpos.data.room.ReceiptVO;
 import br.com.pocketpos.data.room.SaleCashVO;
@@ -20,7 +24,8 @@ import br.com.pocketpos.data.room.SaleVO;
 import br.com.pocketpos.data.util.DB;
 import br.com.pocketpos.data.util.Messaging;
 
-public final class FinalizeSaleAsyncTask<A extends Activity & FinalizeSaleAsyncTask.Listener> extends AsyncTask<Object, Void, Object> {
+public final class FinalizeSaleAsyncTask<A extends Activity & FinalizeSaleAsyncTask.Listener>
+        extends AsyncTask<Object, Void, Object> {
 
 
     private WeakReference<A> activity;
@@ -81,31 +86,116 @@ public final class FinalizeSaleAsyncTask<A extends Activity & FinalizeSaleAsyncT
 
                 database.saleItemDAO().create(saleItemVO);
 
+                //VERIFICA SE O ITEM É UNITARIO.
                 boolean isUnit = catalogItemModel.getMeasureUnit().getGroup() == MeasureUnitGroup.UNIT.ordinal();
 
+                //CASO SEJA UNITARIO, IMPRIME UM TICKET POR UNIDADE.
                 int quantity = isUnit ? catalogItemModel.getQuantity().intValue() : 1;
 
-                for (int i = 1 ; i <= quantity; i++){
+                //VERIFICA SE O ITEM É COMPOSTO.
+                boolean isComposed = database.
+                        productDAO().
+                        isComposed(catalogItemModel.
+                                getProduct().
+                                getIdentifier());
 
-                    SaleItemTicketVO saleItemTicketVO = new SaleItemTicketVO();
+                //SE FOR UNITARIO E O PRODUTO POSSUI COMPOSICAO
+                if (isUnit && isComposed){
 
-                    saleItemTicketVO.setSale(saleItemVO.getSale());
+                    //CRIA LISTA DE TICKETS
+                    List<SaleItemTicketVO> ticketList = new ArrayList<>();
 
-                    saleItemTicketVO.setItem(saleItemVO.getItem());
+                    //VARIAVEL QUE CONTROLA O NUMERO
+                    //SEQUENCIAL DOS TICKETS DO ITEM VENDIDO
+                    int ticket = 1;
 
-                    saleItemTicketVO.setTicket(i);
+                    //BUSCA A COMPOSICAO DO PRODUTO
+                    List<ProductProductModel> parts = database.
+                            productProductDAO().
+                            getCompositionOfProduct(catalogItemModel.
+                                    getProduct().getIdentifier());
 
-                    saleItemTicketVO.setOf(quantity);
+                    //QUANTIDADE DO ITEM DA VENDA
+                    for (int x = 1; x <= quantity; x++) {
 
-                    saleItemTicketVO.setDenomination(catalogItemModel.getDenomination());
+                        //PARTES DO PRODUTO
+                        for (ProductProductModel part: parts) {
 
-                    saleItemTicketVO.setQuantity(isUnit ? 1 : catalogItemModel.getQuantity());
+                            //BUSCA OS DADOS DO COMPONENTE
+                            ProductModel partModel = database.productDAO().get(part.getPart().getIdentifier());
 
-                    saleItemTicketVO.setMeasureUnit(catalogItemModel.getMeasureUnit().getIdentifier());
+                            //VERIFICA SE O COMPONENTE É UNITARIO
+                            boolean isPartUnit = partModel.getMeasureUnit().getGroup() == MeasureUnitGroup.UNIT.ordinal();
 
-                    saleItemTicketVO.setPrinted(false);
+                            //CASO SEJA UNITARIO, IMPRIME UM TICKET POR UNIDADE DO COMPONENTE.
+                            int partQuantity = isPartUnit ? part.getQuantity().intValue() : 1;
 
-                    database.saleItemTicketDAO().create(saleItemTicketVO);
+                            //GERA O CUPOM DO COMPONENTE
+                            for (int y = 1; y <= partQuantity; y++){
+
+                                SaleItemTicketVO saleItemTicketVO = new SaleItemTicketVO();
+
+                                saleItemTicketVO.setSale(saleItemVO.getSale());
+
+                                saleItemTicketVO.setItem(saleItemVO.getItem());
+
+                                saleItemTicketVO.setTicket(ticket);
+
+                                saleItemTicketVO.setOf(0);
+
+                                saleItemTicketVO.setDenomination(partModel.getDenomination());
+
+                                saleItemTicketVO.setQuantity(isPartUnit ? 1 : part.getQuantity());
+
+                                saleItemTicketVO.setMeasureUnit(partModel.getMeasureUnit().getIdentifier());
+
+                                saleItemTicketVO.setPrinted(false);
+
+                                ticketList.add(saleItemTicketVO);
+
+                                ticket++;
+
+                            }
+
+                        }
+
+                    }
+
+                    for (SaleItemTicketVO saleItemTicketVO: ticketList) {
+
+                        //ATUALIZA O TOTAL DE TICKETS CRIADOS PARA O ITEM
+                        saleItemTicketVO.setOf(ticket);
+
+                        //CRIA O ITEM
+                        database.saleItemTicketDAO().create(saleItemTicketVO);
+
+                    }
+
+                } else {
+
+                    for (int n = 1; n <= quantity; n++) {
+
+                        SaleItemTicketVO saleItemTicketVO = new SaleItemTicketVO();
+
+                        saleItemTicketVO.setSale(saleItemVO.getSale());
+
+                        saleItemTicketVO.setItem(saleItemVO.getItem());
+
+                        saleItemTicketVO.setTicket(n);
+
+                        saleItemTicketVO.setOf(quantity);
+
+                        saleItemTicketVO.setDenomination(catalogItemModel.getDenomination());
+
+                        saleItemTicketVO.setQuantity(isUnit ? 1 : catalogItemModel.getQuantity());
+
+                        saleItemTicketVO.setMeasureUnit(catalogItemModel.getMeasureUnit().getIdentifier());
+
+                        saleItemTicketVO.setPrinted(false);
+
+                        database.saleItemTicketDAO().create(saleItemTicketVO);
+
+                    }
 
                 }
 

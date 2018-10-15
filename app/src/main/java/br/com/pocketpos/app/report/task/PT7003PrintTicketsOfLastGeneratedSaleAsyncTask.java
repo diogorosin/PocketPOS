@@ -41,7 +41,6 @@ public class PT7003PrintTicketsOfLastGeneratedSaleAsyncTask<
 
     private PT7003Printer printer;
 
-
     private WeakReference<E> context;
 
     private WeakReference<A> listener;
@@ -98,7 +97,7 @@ public class PT7003PrintTicketsOfLastGeneratedSaleAsyncTask<
 
     protected Map doInBackground(Void... voids) {
 
-        Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND + Process.THREAD_PRIORITY_MORE_FAVORABLE);
+        Process.setThreadPriority(Process.THREAD_PRIORITY_DEFAULT);
 
         E c = context.get();
 
